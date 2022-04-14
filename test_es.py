@@ -13,8 +13,8 @@ def main():
 
     recomb = Intermediate()
     mutation = IndividualSigma()
-    selection = PlusSelection()
-    evaluation = Ackley()
+    selection = CommaSelection()
+    evaluation = Rastringin()
 
     repetitions = 100
 

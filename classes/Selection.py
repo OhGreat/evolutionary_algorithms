@@ -28,7 +28,9 @@ class CommaSelection(Selection):
     """ Get the best individuals only from the offspring population
     """
     def __call__(self, parents: Population, offspring: Population, minimize=True):
+        # get sorted indexes
         sorted_ind = np.argsort(offspring.fitnesses)[:parents.pop_size]
+        # update parent population
         parents.individuals = offspring.individuals[sorted_ind]
         parents.sigmas = offspring.sigmas[sorted_ind]
         parents.fitnesses = offspring.fitnesses[sorted_ind] 

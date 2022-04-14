@@ -10,7 +10,7 @@ class Population:
         self.mutation = mutation
         self.pop_size = pop_size
         self.ind_size = ind_size
-        self.fitnesses = []
+        self.fitnesses = np.array([])
         # initialize individual values
         self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
@@ -63,4 +63,4 @@ class Population:
     def evaluate(self, evaluation):
         """ Evaluate the current population.
         """
-        self.fitnesses = [evaluation(ind) for ind in self.individuals]
+        self.fitnesses = np.array([evaluation(ind) for ind in self.individuals])
