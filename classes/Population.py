@@ -61,4 +61,4 @@ class Population:
     def evaluate(self, evaluation):
         """ Evaluate the current population.
         """
-        self.fitnesses = np.array([evaluation(ind) for ind in self.individuals])
+        self.fitnesses = evaluation(self.individuals)

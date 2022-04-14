@@ -16,11 +16,14 @@ class Ackley(Evaluate):
         self.optimum = 0
         
     def __call__(self, x):
-        dim = len(x)
-        term1 = -1. * self.a * np.exp(-1. * self.b * np.sqrt((1./dim) * sum(map(lambda i: i**2, x))))
-        term2 = -1. * np.exp((1./dim) * (sum(map(lambda j: np.cos(self.c * j), x))))
-        
-        return (term1 + term2 + self.a + np.exp(1))
+        ret_vals = []
+        for ind_idx in range(x.shape[0]):
+            dim = x.shape[1]
+            term1 = -1. * self.a * np.exp(-1. * self.b * np.sqrt((1./dim) * sum(map(lambda i: i**2, x[ind_idx]))))
+            term2 = -1. * np.exp((1./dim) * (sum(map(lambda j: np.cos(self.c * j), x[ind_idx]))))
+            y = term1 + term2 + self.a + np.exp(1)
+            ret_vals.append(y)
+        return np.array(ret_vals)
 
 
 class Rastringin(Evaluate):
@@ -31,5 +34,8 @@ class Rastringin(Evaluate):
         self.optimum = 0
         
     def __call__(self, x):
-        y = self.a * len(x) + sum(map(lambda i: i**2 - self.a * np.cos(2*np.pi*i), x))
-        return y
+        ret_vals = []
+        for ind_idx in range(x.shape[0]):
+            y = self.a * x.shape[1] + sum(map(lambda i: i**2 - self.a * np.cos(2*np.pi*i), x[ind_idx]))
+            ret_vals.append(y)
+        return ret_vals

@@ -11,10 +11,10 @@ def main():
     random.seed(0)
     np.random.seed(0)
 
-    recomb = Intermediate()
+    recombination = Intermediate()
     mutation = IndividualSigma()
     selection = PlusSelection()
-    evaluation = Ackley()
+    evaluation = Rastringin()
 
     repetitions = 100
 
@@ -23,7 +23,7 @@ def main():
             parents_size=4,
             offspring_size=24,
             individual_size=5,
-            recombination=recomb,
+            recombination=recombination,
             mutation=mutation,
             selection=selection,
             evaluation=evaluation,
@@ -36,9 +36,8 @@ def main():
         _, best_eval, best_budget = ea.run()
         best_evals.append(best_eval)
         best_budgets.append(best_budget)
-
-    # end timer
     end_time = time.time()
+
     # print results
     print()
     print(f"Run time: {np.round(end_time - start_time, 3)}")
