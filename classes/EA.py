@@ -51,21 +51,21 @@ class EA:
             if self.recombination is not None:
                 self.recombination(self.parents, self.offspring)
             
-            # Mutation: mutate individuals (offspring)
+            # Mutation: mutate offspring population
             self.mutation(self.offspring)
 
             # Evaluate offspring population
             self.offspring.evaluate(self.evaluation)
             curr_budget += self.offspring_size
 
-            # Next generation parents selection
+            # Select the parents for the next geneation
             self.selection(self.parents, self.offspring)
 
-            # Evaluate new parent population
+            # Evaluate the new parent population
             self.parents.evaluate(self.evaluation)
             curr_budget += self.parents_size
 
-            # Update the best individual in case of success
+            # Update the best individual
             curr_best_eval, curr_best_index = self.parents.best_fitness(self.minimize)
             current_best_indiv = self.parents.individuals[curr_best_index]
             success = False
