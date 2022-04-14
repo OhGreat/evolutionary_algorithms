@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Population:
     """ Attributes:
             - pop_size : size of population
@@ -14,25 +15,22 @@ class Population:
         # initialize individual values
         self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
-        self.sigma_init()
+        self.sigmas = self.sigma_init()
         # initialize alphas if necessary
         if self.mutation.__class__.__name__ == "Correlated":
             self.alphas = np.deg2rad(np.random.uniform(0.,360, size=(self.pop_size, int((self.ind_size*(self.ind_size-1))/2))))
         
-  
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.
         """
         if self.mutation.__class__.__name__ == "OneSigma":
-            self.sigmas = np.random.uniform(max(0, 
-                                                np.min(self.individuals)/6), 
-                                                np.max(self.individuals)/6, 
-                                                size=self.pop_size)
+            return np.random.uniform(max(0, np.min(self.individuals)/6), 
+                                    np.max(self.individuals)/6, 
+                                    size=self.pop_size)
         else:
-            self.sigmas = np.random.uniform(max(0, 
-                                                np.min(self.individuals)/6), 
-                                                np.max(self.individuals)/6, 
-                                                size=(self.pop_size, self.ind_size))
+            return np.random.uniform(max(0, np.min(self.individuals)/6), 
+                                    np.max(self.individuals)/6, 
+                                    size=(self.pop_size, self.ind_size))
 
         
     def max_fitness(self):
