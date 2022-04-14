@@ -35,7 +35,7 @@ class EA:
         # Initialize budget
         curr_budget = 0
         best_budget = 0
-        # initialize best evaluation as worst possible value
+        # initialize best evaluation as the worst possible value
         best_eval = np.inf if self.minimize else np.NINF
 
 
@@ -63,14 +63,14 @@ class EA:
 
             # Update the best individual
             curr_best_eval, curr_best_index = self.parents.best_fitness(self.minimize)
-            success = False
+            new_best_found = False
             if self.minimize:
                 if curr_best_eval < best_eval:
-                    success = True
+                    new_best_found = True
             else:
                 if curr_best_eval > best_eval:
-                    success = True
-            if success:
+                    new_best_found = True
+            if new_best_found:
                 best_indiv = self.parents.individuals[curr_best_index]
                 best_eval = curr_best_eval
                 best_budget = curr_budget

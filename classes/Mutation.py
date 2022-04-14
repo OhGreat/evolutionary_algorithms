@@ -62,18 +62,18 @@ class Correlated(Mutation):
         lr = 1/np.sqrt(2*(np.sqrt(population.ind_size)))
         lr_prime = 1/(np.sqrt(2*population.ind_size))
         beta = math.pi/360  # was 36 and i changed it
-        normal_matr_prime = np.random.normal(0,lr_prime,1)
+        normal_matr_prime = np.random.normal(0.,lr_prime,1)
 
         for ind_idx in range(population.pop_size):
             for sigma in range(population.ind_size):
 
                 # Update our sigmas
-                normal_matr = np.random.normal(0,lr,1)
+                normal_matr = np.random.normal(0.,lr,1)
                 population.sigmas[ind_idx][sigma] = population.sigmas[ind_idx][sigma]*(
                             np.exp(normal_matr+normal_matr_prime))
 
                 # Update angles
-                alphas_noise = np.random.normal(0,beta,len(population.alphas[ind_idx]))
+                alphas_noise = np.random.normal(0.,beta,len(population.alphas[ind_idx]))
                 population.alphas[ind_idx] = population.alphas[ind_idx] + alphas_noise
 
                 # Out of boundary correction
@@ -96,6 +96,6 @@ class Correlated(Mutation):
                 C = np.dot(C, s)
 
                 # Update offspring
-                sigma_std = np.random.multivariate_normal(mean=np.full((population.ind_size),fill_value=0), cov=C)
+                sigma_std = np.random.multivariate_normal(mean=np.full((population.ind_size),fill_value=0.), cov=C)
                 fix = np.array([ random.gauss(0,i) for i in sigma_std ])
                 population.individuals[ind_idx] =  population.individuals[ind_idx] + fix

@@ -12,16 +12,16 @@ np.random.seed(0)
 def main():
 
     recomb = Intermediate()
-    mutation = IndividualSigma()
-    selection = CommaSelection()
+    mutation = OneFifth()
+    selection = PlusSelection()
     evaluation = Rastringin()
 
-    repetitions = 100
+    repetitions = 1
 
     ea = EA(minimize=True,
             budget=10000,
-            parents_size=4,
-            offspring_size=24,
+            parents_size=2,
+            offspring_size=4,
             individual_size=5,
             recombination=recomb,
             mutation=mutation,
