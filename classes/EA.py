@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from classes.Population import *
 import numpy as np
 import time
@@ -59,10 +60,10 @@ class EA:
             curr_budget += self.offspring_size
 
             # Select the parents for the next geneation
-            self.selection(self.parents, self.offspring)
+            self.selection(self.parents, self.offspring, self.minimize)
 
             # Update the best individual
-            curr_best_eval, curr_best_index = self.parents.best_fitness(self.minimize)
+            curr_best_eval = self.parents.fitnesses[0]
             new_best_found = False
             if self.minimize:
                 if curr_best_eval < best_eval:
@@ -71,8 +72,11 @@ class EA:
                 if curr_best_eval > best_eval:
                     new_best_found = True
             if new_best_found:
-                best_indiv = self.parents.individuals[curr_best_index]
+                best_indiv = self.parents.individuals[0]
                 best_eval = curr_best_eval
                 best_budget = curr_budget
+                
+                if self.verbose > 1:
+                    print(f"New best: {best_eval}, budget: {best_budget}")
 
         return best_indiv, best_eval, best_budget

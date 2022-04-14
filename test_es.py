@@ -12,16 +12,16 @@ np.random.seed(0)
 def main():
 
     recomb = Intermediate()
-    mutation = OneFifth()
+    mutation = IndividualSigma()
     selection = PlusSelection()
     evaluation = Rastringin()
 
-    repetitions = 1
+    repetitions = 100
 
     ea = EA(minimize=True,
             budget=10000,
-            parents_size=2,
-            offspring_size=4,
+            parents_size=4,
+            offspring_size=24,
             individual_size=5,
             recombination=recomb,
             mutation=mutation,
@@ -41,7 +41,7 @@ def main():
     end_time = time.time()
     # print results
     print(f"Run time: {end_time - start_time}")
-    print(f"mean best eval: {np.mean(best_evals)}, budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
+    print(f"mean best eval: {np.mean(best_evals)}, mean budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
 
 
 if __name__ == "__main__":
