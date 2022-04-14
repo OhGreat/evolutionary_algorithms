@@ -14,7 +14,7 @@ class Mutation:
         self.mutate(*args)
 
 
-class IndividualSigmaD(Mutation):
+class IndividualSigma(Mutation):
     """ Individual sigma method.
     """
     def mutate(self, population: Population):
