@@ -10,14 +10,14 @@ class Population:
         self.mutation = mutation
         self.pop_size = pop_size
         self.ind_size = ind_size
-
+        self.fitnesses = np.array([])
         # initialize individual values
-        self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
+        self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
         self.sigma_init()
         # initialize alphas if necessary
         if self.mutation.__class__.__name__ == "Correlated":
-            self.alphas = np.deg2rad(np.random.uniform(0,360, size=(self.pop_size, int((self.ind_size*(self.ind_size-1))/2))))
+            self.alphas = np.deg2rad(np.random.uniform(0.,360, size=(self.pop_size, int((self.ind_size*(self.ind_size-1))/2))))
         
   
     def sigma_init(self):
@@ -63,4 +63,4 @@ class Population:
     def evaluate(self, evaluation):
         """ Evaluate the current population.
         """
-        self.fitnesses = [evaluation(ind) for ind in self.individuals]
+        self.fitnesses = np.array([evaluation(ind) for ind in self.individuals])
