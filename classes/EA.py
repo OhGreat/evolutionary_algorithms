@@ -1,5 +1,6 @@
 from classes.Population import *
 import numpy as np
+import time
 
 
 class EA:
@@ -31,15 +32,11 @@ class EA:
     def run(self):
         """ Main function to run the Evolutionary Strategy
         """
-        # Initialize budget and best evaluation (as worst possible)
+        # Initialize budget
         curr_budget = 0
-        best_eval = self.evaluation.worst_eval()
+        # initialize best evaluation as worst possible value
+        best_eval = np.inf if self.minimize else np.NINF
 
-        # Initialize (generation-wise) success probability params
-        # Success means finding a new best individual in a given gen. of offspring
-        # gen_tot=num. of offspring gen., gen_succ=num. of successfull gen.
-        gen_tot = 0
-        gen_succ = 0
 
         # Initial parents evaluation step
         self.parents.evaluate(self.evaluation)
@@ -48,14 +45,13 @@ class EA:
         curr_budget += self.parents_size
 
         while curr_budget < self.budget:
-            gen_tot += 1
 
             # Recombination: creates new offspring
             if self.recombination is not None:
                 self.recombination(self.parents, self.offspring)
             
             # Mutation: mutate individuals (offspring)
-            self.mutation(self.offspring, gen_succ, gen_tot)
+            self.mutation(self.offspring)
 
             # Evaluate offspring population
             self.offspring.evaluate(self.evaluation)
@@ -79,11 +75,7 @@ class EA:
                 if curr_best_eval > best_eval:
                     success = True
             if success:
-                gen_succ += 1
                 best_indiv = current_best_indiv
                 best_eval = curr_best_eval
-                if self.verbose > 1:
-                    print(f"[{curr_budget}/{self.budget}] New best eval: {round(best_eval, 2)}" + \
-                    f" | Pred: {round(np.abs(np.exp(best_eval)),2)} | P_succ: {round(gen_succ/gen_tot, 2)}")
 
         return best_indiv, best_eval

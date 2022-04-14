@@ -6,7 +6,7 @@ from classes.Population import *
 
 class Mutation:
     def mutate(self):
-        """ Mutate the whole population
+        """ Mutate the population.
         """
         pass
 
@@ -17,7 +17,7 @@ class Mutation:
 class IndividualSigma(Mutation):
     """ Individual sigma method.
     """
-    def mutate(self, population: Population, *_):
+    def mutate(self, population: Population):
         tau = 1 / np.sqrt(2 * np.sqrt(population.individuals.shape[1]))
         tau_prime = 1 / np.sqrt(2 * population.individuals.shape[1])
         # one draw from N(0, tau') per individual
@@ -40,7 +40,7 @@ class OneFifth(Mutation):
         if alt:
             self.mutate = self.mutate_alt
 
-    def mutate(self, population: Population, gen_succ: int, gen_tot: int, *_):
+    def mutate(self, population: Population, gen_succ: int, gen_tot: int):
         c = 0.95
         k = 40  # sigmas reset patience
         # reset sigmas
@@ -58,6 +58,8 @@ class OneFifth(Mutation):
 
 
 class Correlated(Mutation):
+    """ Coorelated mutation
+    """
     def mutate(self, population: Population, *_):
         lr = 1/np.sqrt(2*(np.sqrt(population.ind_dim)))
         lr_prime = 1/(np.sqrt(2*population.ind_dim))
@@ -76,7 +78,7 @@ class Correlated(Mutation):
                 alphas_noise = np.random.normal(0,beta,len(population.alphas[ind_idx]))
                 population.alphas[ind_idx] = population.alphas[ind_idx] + alphas_noise
 
-                # Check something, i dunno remember why tho
+                # Out of boundary correction
                 population.alphas[ind_idx][population.alphas[ind_idx] > math.pi] = population.alphas[ind_idx][population.alphas[ind_idx] > math.pi] - 2*math.pi*np.sign(population.alphas[ind_idx][population.alphas[ind_idx] > math.pi])
 
                 #Calculate C matrix
@@ -94,8 +96,6 @@ class Correlated(Mutation):
                 s = np.identity(population.ind_dim)
                 np.fill_diagonal(s, population.sigmas[ind_idx])
                 C = np.dot(C, s)
-                #print(f"max C: {np.max(C)}, min: {np.min(C)}")
-                C = np.abs(np.dot(C, C.T))
 
                 # Update offspring
                 sigma_std = np.random.multivariate_normal(mean=np.full((population.ind_dim),fill_value=0), cov=C)

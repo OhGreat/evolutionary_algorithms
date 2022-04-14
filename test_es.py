@@ -1,3 +1,4 @@
+from signal import Sigmasks
 from classes.Population import *
 from classes.Recombination import *
 from classes.Mutation import *
@@ -6,13 +7,14 @@ from classes.Evaluation import *
 from classes.EA import *
 
 def main():
+    np.random.seed(0)
 
-    recomb = Intermediate(24)
-    mutation = Correlated()
-    selection = CommaSelection()
+    recomb = IntermediateD()
+    mutation = IndividualSigma()
+    selection = PlusSelection()
     evaluation = Rastringin()
 
-    repetitions = 10
+    repetitions = 1000
 
     ea = EA(minimize=True,
             budget=10000,
@@ -26,9 +28,15 @@ def main():
             verbose=0)
 
     best_evals = []
+    start_time = time.time()
     for _ in range(repetitions):
         _, best_eval = ea.run()
         best_evals.append(best_eval)
+
+    # end timer
+    end_time = time.time()
+    # print results
+    print(f"Run time: {end_time - start_time}")
     print(f"mean best eval: {np.mean(best_evals)} in {repetitions} repetitions")
 
 

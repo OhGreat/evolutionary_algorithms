@@ -2,12 +2,6 @@ import numpy as np
 
 
 class Evaluate:
-    def worst_eval(self, minimize=True):
-        """ Return worst possible evaluation
-            That will be the initial value of the best evaluation in the ES
-        """
-        return np.inf if minimize else -np.inf
-
     def __call__(self):
         pass
 
