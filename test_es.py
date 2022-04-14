@@ -6,10 +6,10 @@ from classes.Selection import *
 from classes.Evaluation import *
 from classes.EA import *
 
-random.seed(0)
-np.random.seed(0)
 
 def main():
+    random.seed(0)
+    np.random.seed(0)
 
     recomb = Intermediate()
     mutation = IndividualSigma()
@@ -40,8 +40,9 @@ def main():
     # end timer
     end_time = time.time()
     # print results
-    print(f"Run time: {end_time - start_time}")
-    print(f"mean best eval: {np.mean(best_evals)}, mean budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
+    print()
+    print(f"Run time: {np.round(end_time - start_time, 3)}")
+    print(f"mean best eval: {np.round(np.mean(best_evals),3)}, mean budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
 
 
 if __name__ == "__main__":

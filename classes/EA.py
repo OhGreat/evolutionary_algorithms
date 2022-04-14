@@ -77,6 +77,6 @@ class EA:
                 best_budget = curr_budget
                 
                 if self.verbose > 1:
-                    print(f"New best: {best_eval}, budget: {best_budget}")
+                    print(f"New best: {np.round(best_eval,3)}, budget: {best_budget}")
 
         return best_indiv, best_eval, best_budget
