@@ -1,7 +1,5 @@
-from tabnanny import verbose
 from classes.Population import *
 import numpy as np
-import time
 
 
 class EA:

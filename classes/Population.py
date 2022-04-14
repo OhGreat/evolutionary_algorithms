@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Population:
     """ Attributes:
             - pop_size : size of population

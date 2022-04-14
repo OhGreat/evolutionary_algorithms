@@ -1,10 +1,10 @@
-from signal import Sigmasks
 from classes.Population import *
 from classes.Recombination import *
 from classes.Mutation import *
 from classes.Selection import *
 from classes.Evaluation import *
 from classes.EA import *
+import time
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
     recomb = Intermediate()
     mutation = IndividualSigma()
     selection = PlusSelection()
-    evaluation = Rastringin()
+    evaluation = Ackley()
 
     repetitions = 100
 
@@ -42,7 +42,7 @@ def main():
     # print results
     print()
     print(f"Run time: {np.round(end_time - start_time, 3)}")
-    print(f"mean best eval: {np.round(np.mean(best_evals),3)}, mean budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
+    print(f"mean best eval: {np.round(np.mean(best_evals),4)}, mean budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
 
 
 if __name__ == "__main__":
