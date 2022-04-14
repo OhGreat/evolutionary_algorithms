@@ -14,9 +14,9 @@ def main():
     recombination = Intermediate()
     mutation = IndividualSigma()
     selection = PlusSelection()
-    evaluation = Rastringin()
+    evaluation = Ackley()
 
-    repetitions = 100
+    repetitions = 1000
 
     ea = EA(minimize=True,
             budget=10000,
