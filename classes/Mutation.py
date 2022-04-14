@@ -14,24 +14,22 @@ class Mutation:
         self.mutate(*args)
 
 
-class IndividualSigma(Mutation):
+class IndividualSigmaD(Mutation):
     """ Individual sigma method.
     """
     def mutate(self, population: Population):
-        tau = 1 / np.sqrt(2 * np.sqrt(population.individuals.shape[1]))
-        tau_prime = 1 / np.sqrt(2 * population.individuals.shape[1])
-        # one draw from N(0, tau') per individual
-        tau_prime_drawns = np.random.normal(0, tau_prime, size=population.sigmas.shape[0])
-        tau_prime_drawns = tau_prime_drawns.reshape(-1, 1).repeat(population.sigmas.shape[1], axis=1)
-        # one draw from N(0, tau) per sigma (individuals x components)
-        tau_drawns = np.random.normal(0, tau, size=population.sigmas.shape)
-        # mutate sigmas
-        population.sigmas = population.sigmas * np.exp(tau_drawns + tau_prime_drawns)
-        # mutate components
-        variations = np.random.normal(0, population.sigmas)
-        population.individuals += variations
-
-
+        # define tau and tau'
+        tau = 1/np.sqrt(2*(np.sqrt(population.ind_size)))
+        tau_prime = 1/(np.sqrt(2*population.ind_size))
+        # create N and N' matrixes
+        normal_matr_prime = np.random.normal(0,tau_prime,(population.pop_size,1))
+        normal_matr = np.random.normal(0,tau,(population.pop_size, population.ind_size))
+        #update our sigmas
+        population.sigmas = population.sigmas * np.exp(normal_matr + normal_matr_prime)
+        # update our individuals
+        noises = np.random.normal(0,population.sigmas)
+        population.individuals += noises
+        
 # TODO add support for one-sigma
 class OneFifth(Mutation):
     """ 1/5 success rule method.
@@ -61,13 +59,13 @@ class Correlated(Mutation):
     """ Coorelated mutation
     """
     def mutate(self, population: Population, *_):
-        lr = 1/np.sqrt(2*(np.sqrt(population.ind_dim)))
-        lr_prime = 1/(np.sqrt(2*population.ind_dim))
-        beta = math.pi/36
+        lr = 1/np.sqrt(2*(np.sqrt(population.ind_size)))
+        lr_prime = 1/(np.sqrt(2*population.ind_size))
+        beta = math.pi/360  # was 36 and i changed it
         normal_matr_prime = np.random.normal(0,lr_prime,1)
 
         for ind_idx in range(population.pop_size):
-            for sigma in range(population.ind_dim):
+            for sigma in range(population.ind_size):
 
                 # Update our sigmas
                 normal_matr = np.random.normal(0,lr,1)
@@ -83,21 +81,21 @@ class Correlated(Mutation):
 
                 #Calculate C matrix
                 count = 0
-                C = np.identity(population.ind_dim)
-                for i in range(population.ind_dim-1):
-                    for j in range(i+1,population.ind_dim):
-                        R = np.identity(population.ind_dim)
+                C = np.identity(population.ind_size)
+                for i in range(population.ind_size-1):
+                    for j in range(i+1,population.ind_size):
+                        R = np.identity(population.ind_size)
                         R[i,i] = math.cos(population.alphas[ind_idx][count])
                         R[j,j] = math.cos(population.alphas[ind_idx][count])
                         R[i,j] = -math.sin(population.alphas[ind_idx][count])
                         R[j,i] = math.sin(population.alphas[ind_idx][count])
                         C = np.dot(C, R)
                         count += 1
-                s = np.identity(population.ind_dim)
+                s = np.identity(population.ind_size)
                 np.fill_diagonal(s, population.sigmas[ind_idx])
                 C = np.dot(C, s)
 
                 # Update offspring
-                sigma_std = np.random.multivariate_normal(mean=np.full((population.ind_dim),fill_value=0), cov=C)
+                sigma_std = np.random.multivariate_normal(mean=np.full((population.ind_size),fill_value=0), cov=C)
                 fix = np.array([ random.gauss(0,i) for i in sigma_std ])
                 population.individuals[ind_idx] =  population.individuals[ind_idx] + fix

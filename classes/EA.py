@@ -34,6 +34,7 @@ class EA:
         """
         # Initialize budget
         curr_budget = 0
+        best_budget = 0
         # initialize best evaluation as worst possible value
         best_eval = np.inf if self.minimize else np.NINF
 
@@ -77,5 +78,6 @@ class EA:
             if success:
                 best_indiv = current_best_indiv
                 best_eval = curr_best_eval
+                best_budget = curr_budget
 
-        return best_indiv, best_eval
+        return best_indiv, best_eval, best_budget

@@ -6,15 +6,17 @@ from classes.Selection import *
 from classes.Evaluation import *
 from classes.EA import *
 
-def main():
-    np.random.seed(0)
+random.seed(0)
+np.random.seed(0)
 
-    recomb = IntermediateD()
+def main():
+
+    recomb = Intermediate()
     mutation = IndividualSigma()
     selection = PlusSelection()
     evaluation = Rastringin()
 
-    repetitions = 1000
+    repetitions = 100
 
     ea = EA(minimize=True,
             budget=10000,
@@ -28,16 +30,18 @@ def main():
             verbose=0)
 
     best_evals = []
+    best_budgets = []
     start_time = time.time()
     for _ in range(repetitions):
-        _, best_eval = ea.run()
+        _, best_eval, best_budget = ea.run()
         best_evals.append(best_eval)
+        best_budgets.append(best_budget)
 
     # end timer
     end_time = time.time()
     # print results
     print(f"Run time: {end_time - start_time}")
-    print(f"mean best eval: {np.mean(best_evals)} in {repetitions} repetitions")
+    print(f"mean best eval: {np.mean(best_evals)}, budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
 
 
 if __name__ == "__main__":
