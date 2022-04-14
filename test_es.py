@@ -14,7 +14,7 @@ def main():
     recomb = Intermediate()
     mutation = IndividualSigma()
     selection = PlusSelection()
-    evaluation = Rastringin()
+    evaluation = Ackley()
 
     repetitions = 100
 

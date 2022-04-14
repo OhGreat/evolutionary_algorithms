@@ -61,13 +61,8 @@ class EA:
             # Select the parents for the next geneation
             self.selection(self.parents, self.offspring)
 
-            # Evaluate the new parent population
-            self.parents.evaluate(self.evaluation)
-            curr_budget += self.parents_size
-
             # Update the best individual
             curr_best_eval, curr_best_index = self.parents.best_fitness(self.minimize)
-            current_best_indiv = self.parents.individuals[curr_best_index]
             success = False
             if self.minimize:
                 if curr_best_eval < best_eval:
@@ -76,7 +71,7 @@ class EA:
                 if curr_best_eval > best_eval:
                     success = True
             if success:
-                best_indiv = current_best_indiv
+                best_indiv = self.parents.individuals[curr_best_index]
                 best_eval = curr_best_eval
                 best_budget = curr_budget
 
