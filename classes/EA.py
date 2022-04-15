@@ -29,7 +29,8 @@ class EA:
                                     mutation)
 
     def run(self):
-        """ Main function to run the Evolutionary Strategy
+        """ Runs the Evolutionary Strategy.
+            Returns the best individual, best fitness and the budget it was found at.
         """
         # Initialize budget
         curr_budget = 0
@@ -49,7 +50,7 @@ class EA:
             # Recombination: creates new offspring
             if self.recombination is not None:
                 self.recombination(self.parents, self.offspring)
-            
+
             # Mutation: mutate offspring population
             self.mutation(self.offspring)
 

@@ -1,9 +1,20 @@
 # Evolutionary Strategies Framework
 This repository contains a framework for applying evolutionary strategies (ES) on arbitrary optimization problems.
 
-## Prerequisites
+
+
 
 ## How to use
+
+### Prerequisites
+
+An environment with `Python 3` with the `numpy` package is required. 
+
+### Usage
+
+The main file to run experiments is the `test_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. An example shell script has also been created as an example to set arguments.
+
+### Arguments
 
 ### Running pre-built experiments
 

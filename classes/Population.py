@@ -16,9 +16,16 @@ class Population:
         self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
         self.sigmas = self.sigma_init()
-        # initialize alphas if necessary
+        # initialize parametes for correlated mutation
         if self.mutation.__class__.__name__ == "Correlated":
-            self.alphas = np.deg2rad(np.random.uniform(0.,360, size=(self.pop_size, int((self.ind_size*(self.ind_size-1))/2))))
+            self.m = np.full(self.ind_size,fill_value=0.)
+            self.C = np.identity(self.ind_size)
+            self.step_size = 0.1
+            self.p_s = 0
+            self.p_c = 0
+            self.individuals = np.random.multivariate_normal(mean=self.m, 
+                                                            cov=(self.step_size**2)*self.C,
+                                                            size=(self.pop_size,self.ind_size))
         
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.

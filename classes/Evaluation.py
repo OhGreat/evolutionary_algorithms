@@ -8,6 +8,7 @@ class Evaluate:
 
 class Ackley(Evaluate):
     """ Evaluate a solution on Ackley problem
+        Minimization problem. Optimum is 0.
     """
     def __init__(self, a = 20, b = 0.2, c = 2*np.pi, minimize=True):
         self.a = a
@@ -26,8 +27,9 @@ class Ackley(Evaluate):
         return np.array(ret_vals)
 
 
-class Rastringin(Evaluate):
-    """ Evaluate a solution on Rastringin problem
+class Rastrigin(Evaluate):
+    """ Evaluate a solution on Rastringin problem.
+        Minimization problem. Optimum is 0.
     """
     def __init__(self, a = 10, minimize=True):
         self.a = a

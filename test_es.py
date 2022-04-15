@@ -12,11 +12,11 @@ def main():
     np.random.seed(0)
 
     recombination = Intermediate()
-    mutation = IndividualSigma()
+    mutation = Correlated()
     selection = PlusSelection()
-    evaluation = Ackley()
+    evaluation = Rastrigin()
 
-    repetitions = 1000
+    repetitions = 100
 
     ea = EA(minimize=True,
             budget=10000,
