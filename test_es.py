@@ -4,31 +4,72 @@ from classes.Mutation import *
 from classes.Selection import *
 from classes.Evaluation import *
 from classes.EA import *
+import argparse
 import time
 
 
 def main():
-    random.seed(0)
-    np.random.seed(0)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-r', action='store',
+                        dest='recombination', type=str,
+                        default=None)
+    parser.add_argument('-m', action='store',
+                        dest='mutation', type=str,
+                        default='IndividualSigma')
+    parser.add_argument('-s', action='store',
+                        dest='selection', type=str,
+                        default='PlusSelection')
+    parser.add_argument('-e', action='store',
+                        dest='evaluation', type=str,
+                        default='Rastrigin')
+    parser.add_argument('-min', action='store_true', 
+                        dest='minimize',
+                        help="Use this flag if the problem is minimization")
+    parser.add_argument('-ps', action='store',
+                        dest='parent_size', type=int,
+                        default=4)
+    parser.add_argument('-os', action='store',
+                        dest='offspring_size', type=int,
+                        default=24)
+    parser.add_argument('-pd', action='store',
+                        dest='problem_dimension', type=int,
+                        default=5,
+                        help="Will define the size of each individual")
+    parser.add_argument('-b', action='store',
+                        dest='budget', type=int,
+                        default=10000)
+    parser.add_argument('-rep', action='store',
+                        dest='repetitions', type=int,
+                        default=100)
+    parser.add_argument('-v', action='store',
+                        dest='verbose', type=int,
+                        default=1)
+    parser.add_argument('-seed', action='store',
+                        dest='seed', type=int,
+                        default=None)
+    args = parser.parse_args()
+    print()
+    print("Arguments passed:")
+    print(args)
 
-    recombination = Intermediate()
-    mutation = Correlated()
-    selection = PlusSelection()
-    evaluation = Rastrigin()
+    if args.seed != None:
+        random.seed(args.seed)
+        np.random.seed(args.seed)
 
-    repetitions = 100
+    # define Evolutionary Strategy
+    ea = EA(minimize=args.minimize,
+            budget=args.budget,
+            parents_size=args.parent_size,
+            offspring_size=args.offspring_size,
+            individual_size=args.problem_dimension,
+            recombination=globals()[args.recombination](),
+            mutation=globals()[args.mutation](),
+            selection=globals()[args.selection](),
+            evaluation=globals()[args.evaluation](),
+            verbose=args.verbose)
 
-    ea = EA(minimize=True,
-            budget=10000,
-            parents_size=4,
-            offspring_size=24,
-            individual_size=5,
-            recombination=recombination,
-            mutation=mutation,
-            selection=selection,
-            evaluation=evaluation,
-            verbose=0)
-
+    # Repeat experiment for n = 'repetitions' times
+    repetitions = args.repetitions
     best_evals = []
     best_budgets = []
     start_time = time.time()
