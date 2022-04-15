@@ -2,23 +2,38 @@
 
 This repository contains a framework for applying evolutionary strategies (ES) on arbitrary optimization problems.
 
+## Implementations
+
+The following ES steps have been implemented:
+ - **Recombination**: *Intermediate*, *(more to be added soon)*
+ - **Mutation**: *IndividualSigma*, *(more to be added soon)*
+ - **Selection**: (1 + λ) - *PlusSelection*, (1 , λ) - *CommaSelection*
+<br/><br/>
+
+The following evaluation problems have been implemented:
+ - **Rastrigin**
+ - **Ackley**
+ - *more to be added soon*
+
+
 ## How to use
 
 ### Prerequisites
 
-An environment with `Python 3` with the `numpy` package is required. 
+`Python 3` and `numpy` are required to run the scripts. 
 
 ### Usage
 
 The main file to run experiments is the `test_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. An example shell script `es.sh` has also been created as an example to set arguments.
 
 ### Arguments
+
 The following arguments can be set when running `test_es.py`:
 
-- `-r` : defines the recombination type. Available options: *"Intermediate"*, (more to follow)
-- `-m` : defines the mutation type. Available options: *"IndividualSigma"*, (more to follow)
-- `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"* (more to follow)
-- `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*, (more to follow)
+- `-r` : defines the recombination type. Available options: *"Intermediate"*.
+- `-m` : defines the mutation type. Available options: *"IndividualSigma"*.
+- `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
+- `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*.
 - `-min` : set this flag if the optimization problem is minimization.
 - `-ps` : defines the number of parents. Should be an integer value.
 - `-os` : defines the number of offsprings. Should be an integer value.
@@ -30,7 +45,8 @@ The following arguments can be set when running `test_es.py`:
 
 
 ### Creating your own evaluation functions 
-To create your own evaluation function you can expand the `Evaluate` class on the `Evaluation.py` file in the `classes` folder.
+
+To create your own evaluation function you can expand the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. 
 
 ## Future Work
 
@@ -38,3 +54,4 @@ To create your own evaluation function you can expand the `Evaluate` class on th
 - implement One Fifth rule
 - implement the upsampling strategy
 - impolement more recombination types
+- add possibility to use IOH experimenter
