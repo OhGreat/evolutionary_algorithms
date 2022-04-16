@@ -53,5 +53,5 @@ To create your own evaluation function you can expand the `Evaluate` class on th
 - implement CMA-ES mutation strategy
 - implement One Fifth rule
 - implement the upsampling strategy
-- implement more recombination types
+- ~~implement more recombination types~~
 - add possibility to use IOH experimenter
