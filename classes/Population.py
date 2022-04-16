@@ -26,6 +26,7 @@ class Population:
             self.individuals = np.random.multivariate_normal(mean=self.m, 
                                                             cov=(self.step_size**2)*self.C,
                                                             size=(self.pop_size,self.ind_size))
+            self.alphas = np.array([])
         
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.

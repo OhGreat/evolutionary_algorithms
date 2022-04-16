@@ -56,6 +56,12 @@ def main():
         random.seed(args.seed)
         np.random.seed(args.seed)
 
+    # GlobalIntermediary recombination check
+    if args.recombination == "GlobalIntermediary" and args.offspring_size > 1:
+        print("GlobalIntermediary recombination cannot be used with more than one offspring.")
+        print("Please use a valid configuration")
+        exit()
+
     # define Evolutionary Strategy
     ea = EA(minimize=args.minimize,
             budget=args.budget,

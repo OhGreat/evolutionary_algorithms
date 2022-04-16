@@ -5,7 +5,7 @@ This repository contains a framework for applying evolutionary strategies (ES) o
 ## Implementations
 
 The following ES steps have been implemented:
- - **Recombination**: *Intermediate*, *(more to be added soon)*
+ - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, GlobalDiscrete
  - **Mutation**: *IndividualSigma*, *(more to be added soon)*
  - **Selection**: (1 + λ) - *PlusSelection*, (1 , λ) - *CommaSelection*
 <br/><br/>
@@ -24,13 +24,13 @@ The following evaluation problems have been implemented:
 
 ### Usage
 
-The main file to run experiments is the `test_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. An example shell script `es.sh` has also been created as an example to set arguments.
+The main file to run experiments is the `main_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. An example shell script `es.sh` has also been created as an example to set arguments.
 
 ### Arguments
 
 The following arguments can be set when running `test_es.py`:
 
-- `-r` : defines the recombination type. Available options: *"Intermediate"*.
+- `-r` : defines the recombination type. Available options: *"Intermediate"*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*.
 - `-m` : defines the mutation type. Available options: *"IndividualSigma"*.
 - `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
 - `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*.
@@ -53,5 +53,5 @@ To create your own evaluation function you can expand the `Evaluate` class on th
 - implement CMA-ES mutation strategy
 - implement One Fifth rule
 - implement the upsampling strategy
-- impolement more recombination types
+- implement more recombination types
 - add possibility to use IOH experimenter
