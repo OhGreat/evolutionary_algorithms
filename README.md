@@ -28,7 +28,7 @@ The main file to run experiments is the `main_es.py` file in the main directory.
 
 ### Arguments
 
-The following arguments can be set when running `test_es.py`:
+The following arguments can be set when running `main_es.py`:
 
 - `-r` : defines the recombination type. Available options: *"Intermediate"*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*.
 - `-m` : defines the mutation type. Available options: *"IndividualSigma"*.
