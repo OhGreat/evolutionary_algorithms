@@ -2,7 +2,7 @@
 
 This repository contains a framework for applying evolutionary strategies (ES) on arbitrary optimization problems.
 
-## Implementations
+## Implementation
 
 The following ES steps have been implemented:
  - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*
