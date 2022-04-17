@@ -16,6 +16,12 @@ class Population:
         self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
         self.sigmas = self.sigma_init()
+        # add step size for one fifth rule
+        if self.mutation.__class__.__name__ == "OneFifth":
+            self.step_size = 0.2
+
+        # TODO: Create Correlated mutation params
+        """
         # initialize parametes for correlated mutation
         if self.mutation.__class__.__name__ == "Correlated":
             self.m = np.full(self.ind_size,fill_value=0.)
@@ -26,7 +32,7 @@ class Population:
             self.individuals = np.random.multivariate_normal(mean=self.m, 
                                                             cov=(self.step_size**2)*self.C,
                                                             size=(self.pop_size,self.ind_size))
-            self.alphas = np.array([])
+            self.alphas = np.array([])"""
         
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.

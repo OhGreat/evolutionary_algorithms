@@ -1,3 +1,4 @@
+from numpy import dtype
 from classes.Population import *
 from classes.Recombination import *
 from classes.Mutation import *
@@ -26,7 +27,7 @@ def main():
                         dest='minimize',
                         help="Use this flag if the problem is minimization")
     parser.add_argument('-ps', action='store',
-                        dest='parent_size', type=int,
+                        dest='parents_size', type=int,
                         default=4)
     parser.add_argument('-os', action='store',
                         dest='offspring_size', type=int,
@@ -48,9 +49,22 @@ def main():
                         dest='seed', type=int,
                         default=None)
     args = parser.parse_args()
-    print()
     print("Arguments passed:")
     print(args)
+
+    # define arguments here to be able to make checks later
+    minimize = args.minimize
+    budget = args.budget
+    parents_size = args.parents_size
+    offspring_size = args.offspring_size
+    individual_size = args.problem_dimension
+    if args.recombination != None:
+        recombination = globals()[args.recombination]()
+    else: recombination = None
+    mutation = globals()[args.mutation]()
+    selection=globals()[args.selection]()
+    evaluation=globals()[args.evaluation]()
+    verbose=args.verbose
 
     if args.seed != None:
         random.seed(args.seed)
@@ -62,17 +76,37 @@ def main():
         print("Please use a valid configuration")
         exit()
 
+    # make sure the problem is setup properly
+    if args.mutation == "OneFifth":
+        if parents_size > 1:
+            parents_size = 1
+            if verbose > 0:
+                print("Using one fifth rule. Parent size changed to 1.")
+        if offspring_size > 1:
+            offspring_size = 1
+            if verbose > 0:
+                print("Using one fifth rule. Offspring size changed to 1.") 
+        if selection.__class__.__name__ != "OneFifthSelection":
+            selection = OneFifthSelection()
+            if verbose > 0:
+                print("Using one fifth rule. Switched to OneFifthSelection.")
+        if recombination != None:
+            recombination = None
+            if verbose > 0:
+                print("Using one fifth rule. Recombination disabled.")
+
+
     # define Evolutionary Strategy
-    ea = EA(minimize=args.minimize,
-            budget=args.budget,
-            parents_size=args.parent_size,
-            offspring_size=args.offspring_size,
-            individual_size=args.problem_dimension,
-            recombination=globals()[args.recombination](),
-            mutation=globals()[args.mutation](),
-            selection=globals()[args.selection](),
-            evaluation=globals()[args.evaluation](),
-            verbose=args.verbose)
+    ea = EA(minimize=minimize,
+            budget=budget,
+            parents_size=parents_size,
+            offspring_size=offspring_size,
+            individual_size=individual_size,
+            recombination=recombination,
+            mutation=mutation,
+            selection=selection,
+            evaluation=evaluation,
+            verbose=verbose)
 
     # Repeat experiment for n = 'repetitions' times
     repetitions = args.repetitions

@@ -6,7 +6,7 @@ python main_es.py \
 -s "PlusSelection" \
 -e "Rastrigin" \
 -min \
--ps 3 \
+-ps 4 \
 -os 20 \
 -pd 5 \
 -b 10000 \

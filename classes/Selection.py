@@ -40,3 +40,22 @@ class CommaSelection(Selection):
         parents.fitnesses = offspring.fitnesses[sorted_ind] 
         if parents.mutation.__class__.__name__ == "Correlated":
                 parents.alphas = offspring.alphas[sorted_ind]
+
+class OneFifthSelection(Selection):
+    """ Selection for 1/5 success rule
+    """
+    def __call__(self, parents : Population, offspring : Population, minimize=True):
+        if minimize:
+            if parents.fitnesses[0] > offspring.fitnesses[0]:
+                # new best found
+                parents.individuals = offspring.individuals
+                parents.step_size = 1.5*offspring.step_size
+            else:  # better solution not found
+                parents.step_size *= (1.5)**(-1/4)
+        else: # maximization problem
+            if parents.fitnesses[0] < offspring.fitnesses[0]:
+                # new best found
+                parents.individuals = offspring.individuals
+                parents.step_size = 1.5*offspring.step_size
+            else: # better solution not found
+                parents.step_size *= (1.5)**(-1/4)

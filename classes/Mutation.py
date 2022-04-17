@@ -39,6 +39,15 @@ class Correlated(Mutation):
 
         pass
 
+class OneFifth(Mutation):
+    def mutate(self, population: Population):
+        m = np.full(population.pop_size,fill_value=0.)
+        C = np.identity(population.pop_size)
+        mutation = np.random.multivariate_normal(mean=m, 
+                                                cov=C,
+                                                size=(population.pop_size,population.ind_size)
+                                                ).reshape((population.pop_size, population.ind_size))
+        population.individuals += mutation
 
 
 
