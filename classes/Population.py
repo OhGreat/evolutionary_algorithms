@@ -15,10 +15,10 @@ class Population:
         # initialize individual values
         self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
-        self.sigmas = self.sigma_init()
+        self.sigma_init()
         # add step size for one fifth rule
         if self.mutation.__class__.__name__ == "OneFifth":
-            self.step_size = 0.2
+            self.step_size = 1.5
 
         # TODO: Create Correlated mutation params
         """
@@ -38,15 +38,14 @@ class Population:
         """ Initialize sigma values depending on the mutation.
         """
         if self.mutation.__class__.__name__ == "OneSigma":
-            return np.random.uniform(max(0, np.min(self.individuals)/6), 
-                                    np.max(self.individuals)/6, 
-                                    size=self.pop_size)
+            self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
+                                            np.max(self.individuals)/6, 
+                                            size=self.pop_size)
         else:
-            return np.random.uniform(max(0, np.min(self.individuals)/6), 
-                                    np.max(self.individuals)/6, 
-                                    size=(self.pop_size, self.ind_size))
+            self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
+                                            np.max(self.individuals)/6, 
+                                            size=(self.pop_size, self.ind_size))
 
-        
     def max_fitness(self):
         """ Return the maximum fitness and its index.
         """

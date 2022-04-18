@@ -1,14 +1,15 @@
 #!/bin/bash
 
 python main_es.py \
--m "OneFifth" \
--s "OneFifthSelection" \
+-r "Discrete" \
+-m "IndividualSigma" \
+-s "CommaSelection" \
 -e "Rastrigin" \
 -min \
--ps 1 \
--os 1 \
+-ps 4 \
+-os 24 \
 -pd 5 \
 -b 10000 \
 -rep 10 \
--v 2 \
+-v 1 \
 -seed 0

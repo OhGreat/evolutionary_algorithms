@@ -1,3 +1,4 @@
+from cmath import inf
 import numpy as np
 from classes.Population import *
 
@@ -45,17 +46,44 @@ class OneFifthSelection(Selection):
     """ Selection for 1/5 success rule
     """
     def __call__(self, parents : Population, offspring : Population, minimize=True):
+        decrease_multiplier = 0.9 #(1.5)**(-1/4)
+        increase_multiplier = 1.5
+
+        #print(np.max(parents.sigmas), np.min(parents.sigmas))
+        if parents.sigmas.max() > 1e-5 or parents.sigmas.min() < 1e-5:
+                parents.step_size = 1.8
+                parents.sigma_init()
+
+        # sigma update
         if minimize:
             if parents.fitnesses[0] > offspring.fitnesses[0]:
                 # new best found
                 parents.individuals = offspring.individuals
-                parents.step_size = 1.5*offspring.step_size
+                parents.sigmas *= increase_multiplier
             else:  # better solution not found
-                parents.step_size *= (1.5)**(-1/4)
+                parents.sigmas *= decrease_multiplier 
+
         else: # maximization problem
             if parents.fitnesses[0] < offspring.fitnesses[0]:
                 # new best found
                 parents.individuals = offspring.individuals
-                parents.step_size = 1.5*offspring.step_size
+                parents.sigmas *= increase_multiplier
             else: # better solution not found
-                parents.step_size *= (1.5)**(-1/4)
+                parents.sigmas *= decrease_multiplier
+
+        # step size update
+        """if minimize:
+            if parents.fitnesses[0] >= offspring.fitnesses[0]:
+                # new best found
+                parents.individuals = offspring.individuals
+                parents.step_size *= increase_multiplier
+            else:  # better solution not found
+                parents.step_size *= decrease_multiplier 
+        else: # maximization problem
+            if parents.fitnesses[0] <= offspring.fitnesses[0]:
+                # new best found
+                parents.individuals = offspring.individuals
+                parents.step_size *= increase_multiplier
+            else: # better solution not found
+                parents.step_size *= decrease_multiplier"""
+

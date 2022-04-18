@@ -40,4 +40,4 @@ class Rastrigin(Evaluate):
         for ind_idx in range(x.shape[0]):
             y = self.a * x.shape[1] + sum(map(lambda i: i**2 - self.a * np.cos(2*np.pi*i), x[ind_idx]))
             ret_vals.append(y)
-        return ret_vals
+        return np.array(ret_vals)

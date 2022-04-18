@@ -35,9 +35,11 @@ class EA:
         # Initialize budget
         curr_budget = 0
         best_budget = 0
-        # initialize best evaluation as the worst possible value
+        # Initialize best evaluation as the worst possible value
         best_eval = np.inf if self.minimize else np.NINF
-
+        # Initialize number of better generations found total generations
+        better_generations = 0
+        total_generations = 1
 
         # Initial parents evaluation step
         self.parents.evaluate(self.evaluation)
@@ -52,7 +54,7 @@ class EA:
                 self.recombination(self.parents, self.offspring)
 
             # Mutation: mutate offspring population
-            self.mutation(self.offspring)
+            self.mutation(self.offspring, better_generations, total_generations)
 
             # Evaluate offspring population
             self.offspring.evaluate(self.evaluation)
@@ -64,18 +66,20 @@ class EA:
             # Update the best individual
             curr_best_eval = self.parents.fitnesses[0]
             new_best_found = False
-            if self.minimize:
-                if curr_best_eval < best_eval:
-                    new_best_found = True
-            else:
-                if curr_best_eval > best_eval:
-                    new_best_found = True
+            if self.minimize and curr_best_eval < best_eval:
+                new_best_found = True
+            elif curr_best_eval > best_eval:
+                new_best_found = True
             if new_best_found:
                 best_indiv = self.parents.individuals[0]
                 best_eval = curr_best_eval
                 best_budget = curr_budget
-                
+                # increment number of succesful generations
+                better_generations += 1
+
                 if self.verbose > 1:
-                    print(f"New best: {np.round(best_eval,3)}, budget: {best_budget}")
+                    print(f"New best: {best_eval}, budget: {best_budget}")
+            # inrement number of generations
+            total_generations += 1
 
         return best_indiv, best_eval, best_budget
