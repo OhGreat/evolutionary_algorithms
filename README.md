@@ -2,10 +2,10 @@
 
 This repository contains a framework for applying evolutionary strategies (ES) on arbitrary optimization problems.
 
-## Implementations
+## Implementation
 
 The following ES steps have been implemented:
- - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, GlobalDiscrete
+ - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*
  - **Mutation**: *IndividualSigma*, *(more to be added soon)*
  - **Selection**: (1 + λ) - *PlusSelection*, (1 , λ) - *CommaSelection*
 <br/><br/>
@@ -40,13 +40,13 @@ The following arguments can be set when running `main_es.py`:
 - `-pd` : defines the problem dimension. Will be used to set the individual size.
 - `-b` : defines the budget. Should be an integer value.
 - `-rep` : defines the number of repetitions to average results. Should be an integer value.
-- `-v` : defines the *verbose* intensity. Available options are: *0*, *1*, *2* ,with *2* being the most intense. 
+- `-v` : defines the verbose (prints) intensity. Available options are: *0*, *1*, *2* ,with *2* being the most intense. 
 - `-seed` : defines the seed to use for reproducibility of results. Set to an integer value.
 
 
 ### Creating your own evaluation functions 
 
-To create your own evaluation function you can expand the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. 
+To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. 
 
 ## Future Work
 
