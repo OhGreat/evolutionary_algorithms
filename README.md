@@ -24,13 +24,13 @@ The following optimization problems have been implemented:
 
 ### Usage
 
-The main file to run experiments is the `main_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. An example shell script `es.sh` has also been created as an example to set arguments.
+The main file to run experiments is the `main_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the *test_scripts* directory.
 
 ### Arguments
 
 The following arguments can be set when running `main_es.py`:
 
-- `-r` : defines the recombination type. Available options: *"Intermediate"*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*.
+- `-r` : defines the recombination type. Available options: *"Intermediate"*, *"GlobalIntermediary"*, *"Discrete"*, *"GlobalDiscrete"*.
 - `-m` : defines the mutation type. Available options: *"IndividualSigma"*.
 - `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
 - `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*.
