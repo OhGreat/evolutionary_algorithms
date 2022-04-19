@@ -6,14 +6,14 @@ This repository contains a framework for applying evolutionary strategies (ES) o
 
 The following ES steps have been implemented:
  - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*
- - **Mutation**: *IndividualSigma*, *IndividualOneFifth*, *(CMA to be added soon)*
+ - **Mutation**: *IndividualSigma*, *IndividualOneFifth*, *(CMA to be added*
  - **Selection**: (μ + λ) - *PlusSelection*, (μ , λ) - *CommaSelection*
 <br/><br/>
 
 The following optimization problems have been implemented:
  - **Rastrigin**
  - **Ackley**
- - *more to be added soon*
+ - *more to be added*
 
 
 ## How to use
@@ -52,6 +52,7 @@ To create your own evaluation function you can extend the `Evaluate` class on th
 
 ## Future Work
 
+- add more optimization problems
 - implement CMA-ES mutation strategy
 - ~~implement One Fifth rule~~
 - implement the upsampling strategy

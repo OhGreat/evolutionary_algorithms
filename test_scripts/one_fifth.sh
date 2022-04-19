@@ -4,13 +4,12 @@ python main_es.py \
 -r "Discrete" \
 -m "IndividualOneFifth" \
 -s "PlusSelection" \
--e "Rastrigin" \
+-e "Ackley" \
 -min \
 -ps 6 \
 -os 36 \
--pd 100 \
+-pd 50 \
 -b 10000 \
 -pat 40 \
--rep 10 \
--v 1 \
--seed 0
+-rep 100 \
+-v 1

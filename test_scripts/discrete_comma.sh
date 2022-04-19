@@ -4,12 +4,12 @@ python main_es.py \
 -r "Discrete" \
 -m "IndividualSigma" \
 -s "CommaSelection" \
--e "Rastrigin" \
+-e "Ackley" \
 -min \
--ps 4 \
--os 24 \
--pd 20 \
+-ps 6 \
+-os 36 \
+-pd 50 \
+-pat 100 \
 -b 1000 \
--rep 200 \
--pat 50 \
--v 1 \
+-rep 100 \
+-v 1
