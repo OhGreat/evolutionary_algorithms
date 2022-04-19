@@ -6,7 +6,7 @@ This repository contains a framework for applying evolutionary strategies (ES) o
 
 The following ES steps have been implemented:
  - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*
- - **Mutation**: *IndividualSigma*, *IndividualOneFifth*, *(more to be added soon)*
+ - **Mutation**: *IndividualSigma*, *IndividualOneFifth*, *(CMA to be added soon)*
  - **Selection**: (1 + λ) - *PlusSelection*, (1 , λ) - *CommaSelection*
 <br/><br/>
 
@@ -38,6 +38,8 @@ The following arguments can be set when running `main_es.py`:
 - `-ps` : defines the number of parents. Should be an integer value.
 - `-os` : defines the number of offsprings. Should be an integer value.
 - `-pd` : defines the problem dimension. Will be used to set the individual size.
+- `-mul` : defines the multiplier for the IndividualOneFifth mutation. Float value, default is *0.9*.
+- `-pat` : defines the number of unsuccesful generations to wait before resetting sigmas.
 - `-b` : defines the budget. Should be an integer value.
 - `-rep` : defines the number of repetitions to average results. Should be an integer value.
 - `-v` : defines the verbose (prints) intensity. Available options are: *0*, *1*, *2* ,with *2* being the most intense. 
@@ -46,12 +48,12 @@ The following arguments can be set when running `main_es.py`:
 
 ### Creating your own evaluation functions 
 
-To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. 
+To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. Each evaluation class should have at least the __init__ and __call__ methods defined to work properly.
 
 ## Future Work
 
 - implement CMA-ES mutation strategy
-- implement One Fifth rule
+- ~~implement One Fifth rule~~
 - implement the upsampling strategy
 - ~~implement more recombination types~~
 - add possibility to use IOH experimenter
