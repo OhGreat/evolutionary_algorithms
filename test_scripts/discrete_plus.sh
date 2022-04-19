@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "test print"
 
 python main_es.py \
 -r "Discrete" \
@@ -9,8 +8,8 @@ python main_es.py \
 -min \
 -ps 4 \
 -os 24 \
--pd 5 \
--b 10000 \
--rep 50 \
--v 1 \
--seed 0
+-pd 20 \
+-b 1000 \
+-pat 100 \
+-rep 200 \
+-v 1

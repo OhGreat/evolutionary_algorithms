@@ -39,6 +39,9 @@ def main():
     parser.add_argument('-b', action='store',
                         dest='budget', type=int,
                         default=10000)
+    parser.add_argument('-pat', action='store',
+                        dest='patience', type=int,
+                        default=40)
     parser.add_argument('-rep', action='store',
                         dest='repetitions', type=int,
                         default=100)
@@ -55,6 +58,7 @@ def main():
     # define arguments here to be able to make checks later
     minimize = args.minimize
     budget = args.budget
+    patience = args.patience
     parents_size = args.parents_size
     offspring_size = args.offspring_size
     individual_size = args.problem_dimension
@@ -77,7 +81,7 @@ def main():
         exit()
 
     # make sure the problem is setup properly
-    if args.mutation == "OneFifth":
+    if args.mutation == "OnePlusOneOneFifth":
         if parents_size > 1:
             parents_size = 1
             if verbose > 0:
@@ -86,10 +90,6 @@ def main():
             offspring_size = 1
             if verbose > 0:
                 print("Using one fifth rule. Offspring size changed to 1.") 
-        if selection.__class__.__name__ != "OneFifthSelection":
-            selection = OneFifthSelection()
-            if verbose > 0:
-                print("Using one fifth rule. Switched to OneFifthSelection.")
         if recombination != None:
             recombination = None
             if verbose > 0:
@@ -99,6 +99,7 @@ def main():
     # define Evolutionary Strategy
     ea = EA(minimize=minimize,
             budget=budget,
+            patience=patience,
             parents_size=parents_size,
             offspring_size=offspring_size,
             individual_size=individual_size,
@@ -111,18 +112,16 @@ def main():
     # Repeat experiment for n = 'repetitions' times
     repetitions = args.repetitions
     best_evals = []
-    best_budgets = []
     start_time = time.time()
     for _ in range(repetitions):
-        _, best_eval, best_budget = ea.run()
+        _, best_eval = ea.run()
         best_evals.append(best_eval)
-        best_budgets.append(best_budget)
     end_time = time.time()
 
     # print results
     print()
     print(f"Run time: {np.round(end_time - start_time, 3)}")
-    print(f"mean best eval: {np.round(np.mean(best_evals),4)}, mean budget: {np.mean(best_budgets)}, in {repetitions} repetitions")
+    print(f"mean best eval: {np.round(np.mean(best_evals),6)} in {repetitions} repetitions")
 
 
 if __name__ == "__main__":

@@ -13,27 +13,18 @@ class Population:
         self.ind_size = ind_size
         self.fitnesses = np.array([])
         # initialize individual values
-        self.individuals = np.random.uniform(0., 1, size=(self.pop_size, self.ind_size))
+        self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
         # initialize sigmas
         self.sigma_init()
-        # add step size for one fifth rule
+
+        # Mutation specific checks.
+        # probability of successful popupation for  one fifth success rule mutation
         if self.mutation.__class__.__name__ == "OneFifth":
+            self.success_prob = 0
+        # add step size for (1+1) one fifth success rule
+        if self.mutation.__class__.__name__ == "OnePlusOneOneFifth":
             self.step_size = 1.5
 
-        # TODO: Create Correlated mutation params
-        """
-        # initialize parametes for correlated mutation
-        if self.mutation.__class__.__name__ == "Correlated":
-            self.m = np.full(self.ind_size,fill_value=0.)
-            self.C = np.identity(self.ind_size)
-            self.step_size = 0.1
-            self.p_s = 0
-            self.p_c = 0
-            self.individuals = np.random.multivariate_normal(mean=self.m, 
-                                                            cov=(self.step_size**2)*self.C,
-                                                            size=(self.pop_size,self.ind_size))
-            self.alphas = np.array([])"""
-        
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.
         """

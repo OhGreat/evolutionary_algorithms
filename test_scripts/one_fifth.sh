@@ -1,14 +1,16 @@
 #!/bin/bash
-echo "one fifth success rule"
+
 python main_es.py \
 -r "Discrete" \
--m "OneFifth_" \
+-m "OneFifth" \
 -s "PlusSelection" \
 -e "Rastrigin" \
 -min \
--ps 4 \
--os 24 \
--pd 5 \
+-ps 6 \
+-os 36 \
+-pd 100 \
 -b 10000 \
--rep 20 \
--v 1
+-pat 40 \
+-rep 10 \
+-v 1 \
+-seed 0

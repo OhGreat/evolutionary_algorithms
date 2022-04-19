@@ -8,8 +8,8 @@ python main_es.py \
 -min \
 -ps 4 \
 -os 24 \
--pd 5 \
--b 10000 \
--rep 10 \
+-pd 20 \
+-b 1000 \
+-rep 200 \
+-pat 50 \
 -v 1 \
--seed 0
