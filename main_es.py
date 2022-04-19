@@ -1,4 +1,3 @@
-from numpy import dtype
 from classes.Population import *
 from classes.Recombination import *
 from classes.Mutation import *
@@ -13,44 +12,59 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-r', action='store',
                         dest='recombination', type=str,
-                        default=None)
+                        default=None,
+                        help="Defines the recombination strategy.")
     parser.add_argument('-m', action='store',
                         dest='mutation', type=str,
-                        default='IndividualSigma')
+                        default='IndividualSigma',
+                        help="Defines the mutation strategy.")
     parser.add_argument('-s', action='store',
                         dest='selection', type=str,
-                        default='PlusSelection')
+                        default='PlusSelection',
+                        help="Defines the selection strategy.")
     parser.add_argument('-e', action='store',
                         dest='evaluation', type=str,
-                        default='Rastrigin')
+                        default='Rastrigin',
+                        help="Defines the evaluation function.")
     parser.add_argument('-min', action='store_true', 
                         dest='minimize',
-                        help="Use this flag if the problem is minimization")
+                        help="Use this flag if the problem is minimization.")
     parser.add_argument('-ps', action='store',
                         dest='parents_size', type=int,
-                        default=4)
+                        default=4,
+                        help="Defines the number of parents per generation.")
     parser.add_argument('-os', action='store',
                         dest='offspring_size', type=int,
-                        default=24)
+                        default=24,
+                        help="Defines the number of offspring per generation.")
     parser.add_argument('-pd', action='store',
                         dest='problem_dimension', type=int,
                         default=5,
-                        help="Will define the size of each individual")
-    parser.add_argument('-b', action='store',
-                        dest='budget', type=int,
-                        default=10000)
+                        help="Defines the problem dimension which is also the size of each individual.")
+    parser.add_argument('-mul', action='store',
+                        dest='one_fifth_mul', type=float,
+                        default=0.9,
+                        help="Defines the multiplier for the one fifth success rule.")
     parser.add_argument('-pat', action='store',
                         dest='patience', type=int,
-                        default=40)
+                        default=None,
+                        help="Defines the wait time before resetting sigmas.")          
+    parser.add_argument('-b', action='store',
+                        dest='budget', type=int,
+                        default=10000,
+                        help="Defines the total amount of evaluations.")
     parser.add_argument('-rep', action='store',
                         dest='repetitions', type=int,
-                        default=100)
+                        default=100,
+                        help="Defines the number of repetitions to average results.")
     parser.add_argument('-v', action='store',
                         dest='verbose', type=int,
-                        default=1)
+                        default=1,
+                        help="Defines the intensity of debug prints.")
     parser.add_argument('-seed', action='store',
                         dest='seed', type=int,
-                        default=None)
+                        default=None,
+                        help="Defines the seed for result reproducibility.")
     args = parser.parse_args()
     print("Arguments passed:")
     print(args)
@@ -62,10 +76,23 @@ def main():
     parents_size = args.parents_size
     offspring_size = args.offspring_size
     individual_size = args.problem_dimension
+
+    # recombination specific control
     if args.recombination != None:
         recombination = globals()[args.recombination]()
+    # GlobalIntermediary recombination check
+    elif args.recombination == "GlobalIntermediary" and args.offspring_size > 1:
+        print("GlobalIntermediary recombination cannot be used with more than one offspring.")
+        print("Please use a valid configuration")
+        exit()
     else: recombination = None
-    mutation = globals()[args.mutation]()
+
+    # mutation specific controls
+    if args.mutation == "IndividualOneFifth":
+        mutation = globals()[args.mutation](args.one_fifth_mul)
+    else:
+        mutation = globals()[args.mutation]()
+
     selection=globals()[args.selection]()
     evaluation=globals()[args.evaluation]()
     verbose=args.verbose
@@ -73,28 +100,6 @@ def main():
     if args.seed != None:
         random.seed(args.seed)
         np.random.seed(args.seed)
-
-    # GlobalIntermediary recombination check
-    if args.recombination == "GlobalIntermediary" and args.offspring_size > 1:
-        print("GlobalIntermediary recombination cannot be used with more than one offspring.")
-        print("Please use a valid configuration")
-        exit()
-
-    # make sure the problem is setup properly
-    if args.mutation == "OnePlusOneOneFifth":
-        if parents_size > 1:
-            parents_size = 1
-            if verbose > 0:
-                print("Using one fifth rule. Parent size changed to 1.")
-        if offspring_size > 1:
-            offspring_size = 1
-            if verbose > 0:
-                print("Using one fifth rule. Offspring size changed to 1.") 
-        if recombination != None:
-            recombination = None
-            if verbose > 0:
-                print("Using one fifth rule. Recombination disabled.")
-
 
     # define Evolutionary Strategy
     ea = EA(minimize=minimize,

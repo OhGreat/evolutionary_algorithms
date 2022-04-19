@@ -41,16 +41,17 @@ class Correlated(Mutation):
         pass
 
 
-class OneFifth(Mutation):
+class IndividualOneFifth(Mutation):
+    def __init__(self, multiplier=0.9):
+        self.multiplier = multiplier
 
     def mutate(self, population: Population):
-        multiplier = 0.95
         # increare sigmas for exploration
         if population.success_prob > 0.20:
-            population.sigmas /= multiplier
+            population.sigmas /= self.multiplier
         # decrease sigmas for exploitation
         elif population.success_prob < 0.20:
-            population.sigmas *= multiplier
+            population.sigmas *= self.multiplier
         # mutate individuals
         population.individuals += np.random.normal(0, population.sigmas)
 

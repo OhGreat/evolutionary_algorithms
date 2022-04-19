@@ -2,7 +2,7 @@
 
 python main_es.py \
 -r "Discrete" \
--m "OneFifth" \
+-m "IndividualOneFifth" \
 -s "PlusSelection" \
 -e "Rastrigin" \
 -min \

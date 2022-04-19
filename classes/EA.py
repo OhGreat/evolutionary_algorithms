@@ -86,15 +86,16 @@ class EA:
         # update next generation success probability
         self.offspring.success_prob = self.better_generations / self.total_generations
 
-        # reset sigmas
-        if self.parents.mutation.__class__.__name__ == "OneFifth":
-            # we reset every specified interval
-            if self.total_generations + 1 % self.patience == 0:
-                self.parents.sigma_init()
-        else:  # we reset sigmas when patience expires
-            if self.curr_patience >= self.patience:
-                self.parents.sigma_init()
-                self.curr_patience = 0
+        # reset sigmas if patience has been defined
+        if self.patience:
+            if self.parents.mutation.__class__.__name__ == "OneFifth":
+                # we reset every specified interval
+                if self.total_generations + 1 % self.patience == 0:
+                    self.parents.sigma_init()
+            else:  # we reset sigmas when patience expires
+                if self.curr_patience >= self.patience:
+                    self.parents.sigma_init()
+                    self.curr_patience = 0
         
         # increment current budget
         self.curr_budget += self.offspring_size
