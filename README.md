@@ -10,7 +10,7 @@ The following ES steps have been implemented:
  - **Selection**: (1 + λ) - *PlusSelection*, (1 , λ) - *CommaSelection*
 <br/><br/>
 
-The following evaluation problems have been implemented:
+The following optimization problems have been implemented:
  - **Rastrigin**
  - **Ackley**
  - *more to be added soon*
