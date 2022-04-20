@@ -13,7 +13,9 @@ The following ES steps have been implemented:
 The following optimization problems have been implemented:
  - **Rastrigin**
  - **Ackley**
- - *more to be added*
+ - **Thevenot**
+ - **Adjiman**
+ - **Bartels**
 
 
 ## How to use
@@ -33,7 +35,7 @@ The following arguments can be set when running `main_es.py`:
 - `-r` : defines the recombination type. Available options: *"Intermediate"*, *"GlobalIntermediary"*, *"Discrete"*, *"GlobalDiscrete"*.
 - `-m` : defines the mutation type. Available options: *"IndividualSigma"*.
 - `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
-- `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*.
+- `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*, *"Thevenot"*, *"Adjiman"*, *"Bartels"*. If an evaluation function is not defined, all the above functions will be used.
 - `-min` : set this flag if the optimization problem is minimization.
 - `-ps` : defines the number of parents. Should be an integer value.
 - `-os` : defines the number of offsprings. Should be an integer value.
@@ -48,13 +50,13 @@ The following arguments can be set when running `main_es.py`:
 
 ### Creating your own evaluation functions 
 
-To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. Each evaluation class should have at least the __init__ and __call__ methods defined to work properly.
+To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
 
 ## Future Work
 
-- add more optimization problems
+- ~~add more optimization problems~~
 - implement CMA-ES mutation strategy
 - ~~implement One Fifth rule~~
-- implement the upsampling strategy
+- implement upsampling strategy
 - ~~implement more recombination types~~
 - add possibility to use IOH experimenter

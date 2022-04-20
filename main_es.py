@@ -24,7 +24,7 @@ def main():
                         help="Defines the selection strategy.")
     parser.add_argument('-e', action='store',
                         dest='evaluation', type=str,
-                        default='Rastrigin',
+                        default=None,
                         help="Defines the evaluation function.")
     parser.add_argument('-min', action='store_true', 
                         dest='minimize',
@@ -94,40 +94,49 @@ def main():
         mutation = globals()[args.mutation]()
 
     selection=globals()[args.selection]()
-    evaluation=globals()[args.evaluation]()
+
+    # in case we want to evaluate on multiple problems
+    if args.evaluation == None:
+        print('Evaluation not selected, using all available evaluation functions.')
+        evaluation = [Ackley(), Rastrigin(), Thevenot(), Adjiman(), Bartels()]
+    else:
+        evaluation=[globals()[args.evaluation]()]
     verbose=args.verbose
 
     if args.seed != None:
         random.seed(args.seed)
         np.random.seed(args.seed)
 
-    # define Evolutionary Strategy
-    ea = EA(minimize=minimize,
-            budget=budget,
-            patience=patience,
-            parents_size=parents_size,
-            offspring_size=offspring_size,
-            individual_size=individual_size,
-            recombination=recombination,
-            mutation=mutation,
-            selection=selection,
-            evaluation=evaluation,
-            verbose=verbose)
+    # iterate over chosen evaluation functions
+    for eval_fun in evaluation:
 
-    # Repeat experiment for n = 'repetitions' times
-    repetitions = args.repetitions
-    best_evals = []
-    start_time = time.time()
-    for _ in range(repetitions):
-        _, best_eval = ea.run()
-        best_evals.append(best_eval)
-    end_time = time.time()
+        # define Evolutionary Strategy
+        ea = EA(minimize=minimize,
+                budget=budget,
+                patience=patience,
+                parents_size=parents_size,
+                offspring_size=offspring_size,
+                individual_size=individual_size,
+                recombination=recombination,
+                mutation=mutation,
+                selection=selection,
+                evaluation=eval_fun,
+                verbose=verbose)
 
-    # print results
-    print()
-    print(f"Run time: {np.round(end_time - start_time, 3)}")
-    print(f"mean best eval: {np.round(np.mean(best_evals),6)} in {repetitions} repetitions")
+        # Repeat experiment for n = 'repetitions' times
+        repetitions = args.repetitions
+        best_evals = []
+        start_time = time.time()
+        for _ in range(repetitions):
+            _, best_eval = ea.run()
+            best_evals.append(best_eval)
+        end_time = time.time()
 
+        # print results
+        best = np.min(best_evals) if minimize else np.max(best_evals)
+        print(f"Evaluated {eval_fun.__class__.__name__}, run time: {np.round(end_time - start_time, 3)}")
+        print(f"best_eval: {best}, mean eval: {np.round(np.mean(best_evals),6)} in {repetitions} repetitions")
+        print()
 
 if __name__ == "__main__":
     main()

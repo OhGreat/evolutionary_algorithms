@@ -4,7 +4,6 @@ python main_es.py \
 -r "Discrete" \
 -m "IndividualOneFifth" \
 -s "PlusSelection" \
--e "Ackley" \
 -min \
 -ps 6 \
 -os 36 \

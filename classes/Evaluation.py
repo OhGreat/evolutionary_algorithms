@@ -41,3 +41,36 @@ class Rastrigin(Evaluate):
             y = self.a * x.shape[1] + sum(map(lambda i: i**2 - self.a * np.cos(2*np.pi*i), x[ind_idx]))
             ret_vals.append(y)
         return np.array(ret_vals)
+
+
+class Thevenot(Evaluate):
+    def __init__(self, m=5, beta=15):
+        self.m = m
+        self.beta = beta
+
+    def __call__(self, x):
+        ret_vals = []
+        for ind_idx in range(x.shape[0]):
+            res = np.exp(-np.sum((x[ind_idx]/self.beta)**(2*self.m)))
+            res = res - 2*np.exp(-np.prod(x[ind_idx]**2))*np.prod(np.cos(x[ind_idx])**2)
+            ret_vals.append(res)
+        return np.array(ret_vals)
+
+
+class Adjiman(Evaluate):
+    def __call__(self, x):
+        ret_vals = []
+        for ind_idx in range(x.shape[0]):
+            res = np.sum(np.cos(x[ind_idx]) * np.sin(x[ind_idx]) - x[ind_idx] / (x[ind_idx]**2 + 1))
+            ret_vals.append(res)
+        return np.array(ret_vals)
+
+
+class Bartels(Evaluate):
+    def __call__(self, X):
+        ret_vals = []
+        for ind_idx in range(X.shape[0]):
+            x = X[ind_idx]
+            res = np.sum(np.abs(x**2 + x**2 + x*x) + np.abs(np.sin(x)) + np.abs(np.cos(x)))
+            ret_vals.append(res)
+        return np.array(ret_vals)
