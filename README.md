@@ -33,7 +33,7 @@ The main file to run experiments is the `main_es.py` file in the main directory.
 The following arguments can be set when running `main_es.py`:
 
 - `-r` : defines the recombination type. Available options: *"Intermediate"*, *"GlobalIntermediary"*, *"Discrete"*, *"GlobalDiscrete"*.
-- `-m` : defines the mutation type. Available options: *"IndividualSigma"*.
+- `-m` : defines the mutation type. Available options: *"IndividualSigma"*, *"IndividualOneFifth"*.
 - `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
 - `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*, *"Thevenot"*, *"Adjiman"*, *"Bartels"*. If an evaluation function is not defined, all the above functions will be used.
 - `-min` : set this flag if the optimization problem is minimization.

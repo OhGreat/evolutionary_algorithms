@@ -44,6 +44,9 @@ class Rastrigin(Evaluate):
 
 
 class Thevenot(Evaluate):
+    """ Evaluate a solution on Thevenot problem.
+        Minimization problem. Optimum is 0, for m=5 and beta=15
+    """
     def __init__(self, m=5, beta=15):
         self.m = m
         self.beta = beta
@@ -58,6 +61,9 @@ class Thevenot(Evaluate):
 
 
 class Adjiman(Evaluate):
+    """ Evaluate a solution on Adjimin problem.
+        Minimization problem. Optimum is -2.02181.
+    """
     def __call__(self, x):
         ret_vals = []
         for ind_idx in range(x.shape[0]):
@@ -67,6 +73,9 @@ class Adjiman(Evaluate):
 
 
 class Bartels(Evaluate):
+    """ Evaluate a solution on Bartels problem.
+        Minimization problem. Optimum is 1.
+    """
     def __call__(self, X):
         ret_vals = []
         for ind_idx in range(X.shape[0]):

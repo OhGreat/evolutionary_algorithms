@@ -5,10 +5,10 @@ python main_es.py \
 -m "IndividualSigma" \
 -s "CommaSelection" \
 -min \
--ps 6 \
--os 36 \
+-ps 10 \
+-os 70 \
 -pd 50 \
--pat 10 \
 -b 10000 \
+-pat 40 \
 -rep 100 \
 -v 1

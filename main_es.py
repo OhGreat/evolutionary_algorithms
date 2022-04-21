@@ -134,8 +134,8 @@ def main():
 
         # print results
         best = np.min(best_evals) if minimize else np.max(best_evals)
-        print(f"Evaluated {eval_fun.__class__.__name__}, run time: {np.round(end_time - start_time, 3)}")
-        print(f"best_eval: {best}, mean eval: {np.round(np.mean(best_evals),6)} in {repetitions} repetitions")
+        print(f"{eval_fun.__class__.__name__} - run time: {np.round(end_time - start_time, 2)}")
+        print(f"best_eval: {best}, mean eval: {np.round(np.mean(best_evals),4)} in {repetitions} repetitions")
         print()
 
 if __name__ == "__main__":

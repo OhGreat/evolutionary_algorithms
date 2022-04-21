@@ -5,8 +5,8 @@ python main_es.py \
 -m "IndividualOneFifth" \
 -s "PlusSelection" \
 -min \
--ps 6 \
--os 36 \
+-ps 10 \
+-os 70 \
 -pd 50 \
 -b 10000 \
 -pat 40 \

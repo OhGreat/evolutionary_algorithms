@@ -21,9 +21,6 @@ class Population:
         # probability of successful popupation for  one fifth success rule mutation
         if self.mutation.__class__.__name__ == "IndividualOneFifth":
             self.success_prob = 0
-        # add step size for (1+1) one fifth success rule
-        if self.mutation.__class__.__name__ == "OnePlusOneOneFifth":
-            self.step_size = 1.5
 
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.
