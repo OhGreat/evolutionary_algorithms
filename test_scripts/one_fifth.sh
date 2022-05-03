@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python main_es.py \
+python main_ea.py \
 -r "Discrete" \
 -m "IndividualOneFifth" \
 -s "PlusSelection" \

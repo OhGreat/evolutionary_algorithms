@@ -39,7 +39,7 @@ class EA:
         self.better_generations = 0
         self.total_generations = 1
         # Initial parents setup
-        self.parents.evaluate(self.evaluation)
+        self.evaluation(self.parents)
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
@@ -51,7 +51,7 @@ class EA:
             # Mutation: mutate offspring population
             self.mutation(self.offspring)
             # Evaluation: evaluate offspring population
-            self.offspring.evaluate(self.evaluation)
+            self.evaluation(self.offspring)
             # Selection: select the parents for the next geneation
             self.selection(self.parents, self.offspring, self.minimize)
             # Update control variables, e.g. budget and best individual
