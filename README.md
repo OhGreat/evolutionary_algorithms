@@ -1,6 +1,6 @@
 # Evolutionary Strategies Framework
 
-This repository contains a framework for applying evolutionary strategies (ES) on arbitrary optimization problems.
+This repository contains a framework for applying evolutionary strategies (ES) on arbitrary black box optimization problems.
 
 ## Implementation
 
