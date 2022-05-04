@@ -37,7 +37,7 @@ class EA:
         self.curr_budget, self.curr_patience = 0, 0
         # Initialize number of better generations found total generations
         self.better_generations = 0
-        self.total_generations = 1
+        self.total_generations = 0
         # Initial parents setup
         self.evaluation(self.parents)
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)

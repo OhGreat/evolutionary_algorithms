@@ -58,8 +58,3 @@ class Population:
         else:
             arg_min = np.argmin(self.fitnesses)
             return self.fitnesses[arg_min], arg_min
-
-    def evaluate(self, evaluation):
-        """ Evaluate the current population.
-        """
-        self.fitnesses = evaluation(self.individuals)

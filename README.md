@@ -6,7 +6,7 @@ This repository contains a framework for applying evolutionary strategies (ES) o
 
 The following ES steps have been implemented:
  - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*
- - **Mutation**: *IndividualSigma*, *IndividualOneFifth*, *(CMA to be added*
+ - **Mutation**: *IndividualSigma*, *IndividualOneFifth*, *(CMA to be added)*
  - **Selection**: (μ + λ) - *PlusSelection*, (μ , λ) - *CommaSelection*
 <br/><br/>
 
