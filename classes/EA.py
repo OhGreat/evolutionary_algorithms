@@ -43,6 +43,7 @@ class EA:
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
+        self.best_budget = self.curr_budget
 
         while self.curr_budget < self.budget:
             # Recombination: creates new offspring
@@ -56,6 +57,8 @@ class EA:
             self.selection(self.parents, self.offspring, self.minimize)
             # Update control variables, e.g. budget and best individual
             self.update_control_vars()
+        if self.verbose > 0:
+                print(f"Best eval: {self.best_eval} on budget: {self.best_budget}")
         return self.best_indiv, self.best_eval
 
     def update_control_vars(self):
@@ -75,6 +78,8 @@ class EA:
             self.better_generations += 1
             # reset patience since we found a new best
             self.curr_patience = 0
+            # correct best_budget
+            self.best_budget = self.curr_budget
             # debug print
             if self.verbose > 1:
                 print(f"New best: {self.best_eval}, budget: {self.curr_budget}")

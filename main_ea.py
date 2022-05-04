@@ -110,24 +110,24 @@ def main():
     # iterate over chosen evaluation functions
     for eval_fun in evaluation:
 
-        # define Evolutionary Strategy
-        ea = EA(minimize=minimize,
-                budget=budget,
-                patience=patience,
-                parents_size=parents_size,
-                offspring_size=offspring_size,
-                individual_size=individual_size,
-                recombination=recombination,
-                mutation=mutation,
-                selection=selection,
-                evaluation=eval_fun,
-                verbose=verbose)
-
         # Repeat experiment for n = 'repetitions' times
         repetitions = args.repetitions
         best_evals = []
         start_time = time.time()
         for _ in range(repetitions):
+            # define Evolutionary Algorithm
+            ea = EA(minimize=minimize,
+                    budget=budget,
+                    patience=patience,
+                    parents_size=parents_size,
+                    offspring_size=offspring_size,
+                    individual_size=individual_size,
+                    recombination=recombination,
+                    mutation=mutation,
+                    selection=selection,
+                    evaluation=eval_fun,
+                    verbose=verbose)
+
             _, best_eval = ea.run()
             best_evals.append(best_eval)
         end_time = time.time()

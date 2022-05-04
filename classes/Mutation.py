@@ -25,6 +25,9 @@ class IndividualSigma(Mutation):
         #update our sigmas
         population.sigmas = population.sigmas * np.exp(normal_matr + normal_matr_prime)
         # update our individuals
+        if (population.sigmas < 0).any():
+            print("Sigmas < 0! Trying a reset..", population.sigmas)
+            population.sigma_init()
         noises = np.random.normal(0,population.sigmas)
         population.individuals += noises
 
