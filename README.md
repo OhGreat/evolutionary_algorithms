@@ -17,7 +17,6 @@ The following optimization problems have been implemented:
  - **Thevenot**
  - **Bartels**
 
-
 ## How to use
 
 ### Prerequisites
@@ -46,12 +45,17 @@ The following arguments can be set when running `main_es.py`:
 - `-rep` : defines the number of repetitions to average results. Should be an integer value.
 - `-v` : defines the verbose (prints) intensity. Available options are: *0*, *1*, *2* ,with *2* being the most intense. 
 - `-seed` : defines the seed to use for reproducibility of results. Set to an integer value.
--`-save_plots` : set the flag in order to save plots of the algorithms performance.
-
+- `-save_plots` : set the flag in order to save plots of the algorithms performance.
 
 ### Creating your own evaluation functions 
 
 To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
+
+## Examples
+
+The following image is the result of the `individual.sh` configuration found in the `test_scripts` directory.
+
+<img src="https://github.com/OhGreat/evolutionary_algorithms/readme_aux/example_plots.png" />
 
 ## Future Work
 
