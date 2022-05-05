@@ -55,7 +55,7 @@ To create your own evaluation function you can extend the `Evaluate` class on th
 
 The following image is the result of the `individual.sh` configuration found in the `test_scripts` directory.
 
-<img src="https://github.com/OhGreat/evolutionary_algorithms/readme_aux/example_plots.png" />
+<img src="https://github.com/OhGreat/evolutionary_algorithms/blob/main/readme_aux/example_plots.png" />
 
 ## Future Work
 
