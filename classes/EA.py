@@ -44,6 +44,7 @@ class EA:
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
         self.best_budget = self.curr_budget
+        self.all_best_evals = []
 
         while self.curr_budget < self.budget:
             # Recombination: creates new offspring
@@ -57,15 +58,16 @@ class EA:
             self.selection(self.parents, self.offspring, self.minimize)
             # Update control variables, e.g. budget and best individual
             self.update_control_vars()
-        if self.verbose > 0:
+        if self.verbose > 0: # prints once per run
                 print(f"Best eval: {self.best_eval} on budget: {self.best_budget}")
-        return self.best_indiv, self.best_eval
+        return self.best_indiv, self.best_eval, np.array(self.all_best_evals)
 
     def update_control_vars(self):
         """ Updates all control variables
         """
         # Update the best individual
         curr_best_eval = self.parents.fitnesses[0]
+        self.all_best_evals.append(curr_best_eval)
         new_best_found = False
         if self.minimize and curr_best_eval < self.best_eval:
             new_best_found = True
@@ -81,8 +83,8 @@ class EA:
             # correct best_budget
             self.best_budget = self.curr_budget
             # debug print
-            if self.verbose > 1:
-                print(f"New best: {self.best_eval}, budget: {self.curr_budget}")
+            if self.verbose > 1: # prints every find the algorithm finds a new best
+                print(f"New best: {self.best_eval}, budget: {self.best_budget}")
         else:  # new best not found, increment current patience counter
             self.curr_patience += 1
         # increment past generations counter

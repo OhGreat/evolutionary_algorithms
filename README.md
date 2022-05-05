@@ -11,10 +11,10 @@ The following ES steps have been implemented:
 <br/><br/>
 
 The following optimization problems have been implemented:
- - **Rastrigin**
  - **Ackley**
- - **Thevenot**
  - **Adjiman**
+ - **Rastrigin**
+ - **Thevenot**
  - **Bartels**
 
 
@@ -46,6 +46,7 @@ The following arguments can be set when running `main_es.py`:
 - `-rep` : defines the number of repetitions to average results. Should be an integer value.
 - `-v` : defines the verbose (prints) intensity. Available options are: *0*, *1*, *2* ,with *2* being the most intense. 
 - `-seed` : defines the seed to use for reproducibility of results. Set to an integer value.
+-`-save_plots` : set the flag in order to save plots of the algorithms performance.
 
 
 ### Creating your own evaluation functions 
@@ -55,8 +56,8 @@ To create your own evaluation function you can extend the `Evaluate` class on th
 ## Future Work
 
 - ~~add more optimization problems~~
-- implement CMA-ES mutation strategy
 - ~~implement One Fifth rule~~
-- implement upsampling strategy
+- implement CMA-ES mutation strategy
+- implement upsampling
 - ~~implement more recombination types~~
 - add possibility to use IOH experimenter
