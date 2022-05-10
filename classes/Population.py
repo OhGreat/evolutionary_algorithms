@@ -5,7 +5,10 @@ class Population:
     """ Attributes:
             - pop_size : size of population
             - ind_size : size of the individual
+            - individuals: 'weights' of the individual that get tuned by the algorithm
+            - fitness: defines how good the current individual is for the problem.
             - mutation : defines the mutation to be used in order to initialize parameters
+            - sigmas : parameters used for the Individual Mutation
     """
     def __init__(self, pop_size, ind_size, mutation):
         self.mutation = mutation

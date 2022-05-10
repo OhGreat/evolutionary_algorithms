@@ -21,7 +21,10 @@ The following optimization problems have been implemented:
 
 ### Prerequisites
 
-`Python 3` and `numpy` are required to run the scripts. 
+A `Python 3` environment is required, with the packages found in the `requirements.txt` file in the main directory. To install them, run from `main directory` the following command:
+```
+pip install -r requirements.txt
+```
 
 ### Usage
 

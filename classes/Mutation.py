@@ -25,9 +25,10 @@ class IndividualSigma(Mutation):
         #update our sigmas
         population.sigmas = population.sigmas * np.exp(normal_matr + normal_matr_prime)
         # update our individuals
-        if (population.sigmas < 0).any():
+        if (population.sigmas < 0).any(): # make sure sigmas are positive
             print("Sigmas < 0! Trying a reset..", population.sigmas)
             population.sigma_init()
+        # create noise and update population
         noises = np.random.normal(0,population.sigmas)
         population.individuals += noises
 
@@ -45,6 +46,9 @@ class Correlated(Mutation):
 
 
 class IndividualOneFifth(Mutation):
+    """ Uses sigmas but scales them proportionally 
+        when the probability of a successful population is smaller 0.2
+    """
     def __init__(self, multiplier=0.9):
         self.multiplier = multiplier
 
