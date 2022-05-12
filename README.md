@@ -19,16 +19,21 @@ The following optimization problems have been implemented:
 
 ## How to use
 
-### Prerequisites
+### Installing
 
-A `Python 3` environment is required, with the packages found in the `requirements.txt` file in the main directory. To install them, run from `main directory` the following command:
+To clone and use the repository, `Python 3` environment is required, with the packages found in the `requirements.txt` file in the main directory. To install them, run from `main directory` the following command:
 ```
 pip install -r requirements.txt
 ```
 
+To various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
+```
+pip install EA-framework-OhGreat==0.2.2
+```
+
 ### Usage
 
-The main file to run experiments is the `main_es.py` file in the main directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the *test_scripts* directory.
+The main file to run experiments is the `main_es.py` file in the `src` directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the *scripts* directory.
 
 ### Arguments
 
@@ -52,11 +57,11 @@ The following arguments can be set when running `main_es.py`:
 
 ### Creating your own evaluation functions 
 
-To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
+To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `src/classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
 
-## Examples
+## Examples 
 
-The following image is the result of the `individual.sh` configuration found in the `test_scripts` directory.
+The following image is the result of the `individual.sh` configuration found in the `src/scripts` directory.
 
 <img src="https://github.com/OhGreat/evolutionary_algorithms/blob/main/readme_aux/example_plots.png" />
 

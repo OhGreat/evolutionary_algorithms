@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python main_ea.py \
+python src/main_ea.py \
 -r "Discrete" \
 -m "IndividualSigma" \
 -s "PlusSelection" \

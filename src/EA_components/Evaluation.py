@@ -1,5 +1,5 @@
 import numpy as np
-from classes.Population import Population
+from EA_components.Population import Population
 
 
 class Ackley():

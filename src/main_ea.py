@@ -1,10 +1,9 @@
-from cProfile import label
-from classes.Population import *
-from classes.Recombination import *
-from classes.Mutation import *
-from classes.Selection import *
-from classes.Evaluation import *
-from classes.EA import *
+from EA_components.Population import *
+from EA_components.Recombination import *
+from EA_components.Mutation import *
+from EA_components.Selection import *
+from EA_components.Evaluation import *
+from EA_components.EA import *
 import matplotlib.pyplot as plt
 import argparse
 import time

@@ -1,4 +1,4 @@
-from classes.Population import *
+from EA_components.Population import *
 import numpy as np
 import random
 

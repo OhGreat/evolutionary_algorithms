@@ -1,6 +1,6 @@
 from cmath import inf
 import numpy as np
-from classes.Population import *
+from EA_components.Population import *
 
 
 class Selection:
