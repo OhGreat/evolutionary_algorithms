@@ -17,28 +17,21 @@ The following optimization problems have been implemented:
  - **Thevenot**
  - **Bartels**
 
-## How to use
 
-### Installing
-
+## Installing
 To clone and use the repository, `Python 3` environment is required, with the packages found in the `requirements.txt` file in the main directory. To install them, run from `main directory` the following command:
 ```
 pip install -r requirements.txt
 ```
-
 To various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
 ```
-pip install EA-framework-OhGreat==0.2.2
+pip install EA-framework-OhGreat==0.2.4
 ```
 
-### Usage
-
-The main file to run experiments is the `main_es.py` file in the `src` directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the *scripts* directory.
-
-### Arguments
+## Usage of cloned repository
+The main file to run experiments is the `main_es.py` file in the `src` directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the `scripts` directory.
 
 The following arguments can be set when running `main_es.py`:
-
 - `-r` : defines the recombination type. Available options: *"Intermediate"*, *"GlobalIntermediary"*, *"Discrete"*, *"GlobalDiscrete"*.
 - `-m` : defines the mutation type. Available options: *"IndividualSigma"*, *"IndividualOneFifth"*.
 - `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
@@ -56,17 +49,29 @@ The following arguments can be set when running `main_es.py`:
 - `-save_plots` : set the flag in order to save plots of the algorithms performance.
 
 ### Creating your own evaluation functions 
-
 To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `src/classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
 
-## Examples 
+## Usage of pip package
+The following classes required to build an EA can be imported from the `EA_components` pip library as such:
+```python
+from EA_components import EA
+from EA_components import Evaluation
+from EA_components import Mutation
+from EA_components import Population
+from EA_components import Recombination
+from EA_components import Selection
+```
 
+## Examples 
 The following image is the result of the `individual.sh` configuration found in the `src/scripts` directory.
 
 <img src="https://github.com/OhGreat/evolutionary_algorithms/blob/main/readme_aux/example_plots.png" />
 
-## Future Work
+## Issues
+If you encounter any problems while using the framework you can notify me by opening an issue here:
+https://github.com/OhGreat/evolutionary_algorithms/issues
 
+## Future Work
 - ~~add more optimization problems~~
 - ~~implement One Fifth rule~~
 - implement CMA-ES mutation strategy
