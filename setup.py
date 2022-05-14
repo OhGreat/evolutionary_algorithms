@@ -1,11 +1,11 @@
 import setuptools
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("pip_README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="EA_framework-OhGreat",
-    version="0.2.4",
+    version="0.2.5",
     author="Dimitrios Ieronymakis",
     author_email="dimitris.ieronymakis@gmail.com",
     description="A framework for applying evolutionary algorithms to generic optimization problems.",

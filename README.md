@@ -1,4 +1,4 @@
-# Evolutionary Strategies Framework
+# Evolutionary Algorithms Framework
 
 This repository contains a framework for applying evolutionary strategies (ES) on arbitrary black box optimization problems.
 
@@ -10,12 +10,8 @@ The following ES steps have been implemented:
  - **Selection**: (μ + λ) - *PlusSelection*, (μ , λ) - *CommaSelection*
 <br/><br/>
 
-The following optimization problems have been implemented:
- - **Ackley**
- - **Adjiman**
- - **Rastrigin**
- - **Thevenot**
- - **Bartels**
+The following optimization problems have been implemented:<br/>
+**Ackley**, **Adjiman**, **Rastrigin**, **Thevenot**, **Bartels**
 
 
 ## Installing
@@ -25,7 +21,7 @@ pip install -r requirements.txt
 ```
 To various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
 ```
-pip install EA-framework-OhGreat==0.2.4
+pip install EA-framework-OhGreat==0.2.5
 ```
 
 ## Usage of cloned repository
@@ -52,15 +48,8 @@ The following arguments can be set when running `main_es.py`:
 To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `src/classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
 
 ## Usage of pip package
-The following classes required to build an EA can be imported from the `EA_components` pip library as such:
-```python
-from EA_components import EA
-from EA_components import Evaluation
-from EA_components import Mutation
-from EA_components import Population
-from EA_components import Recombination
-from EA_components import Selection
-```
+
+To use the pip package please refer to the documentation available <a href="https://pypi.org/project/EA-framework-OhGreat/">here</a>.
 
 ## Examples 
 The following image is the result of the `individual.sh` configuration found in the `src/scripts` directory.
