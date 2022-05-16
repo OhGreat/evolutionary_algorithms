@@ -5,7 +5,7 @@ with open("README_pip.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="EA_framework-OhGreat",
-    version="0.2.7",
+    version="0.2.8",
     author="Dimitrios Ieronymakis",
     author_email="dimitris.ieronymakis@gmail.com",
     description="A framework for applying evolutionary algorithms to generic optimization problems.",

@@ -35,7 +35,7 @@ The following optimization problems have been implemented:<br/>
 ## Installing
 The various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
 ```
-pip install EA-framework-OhGreat==0.2.7
+pip install EA-framework-OhGreat==0.2.8
 ```
 Instrutions and documentation on how to use this package are available <a href="https://pypi.org/project/EA-framework-OhGreat/">here</a>.
 
