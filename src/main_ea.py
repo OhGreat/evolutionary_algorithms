@@ -133,9 +133,11 @@ def main():
                     evaluation=eval_fun,
                     verbose=verbose)
             # run the ea strategy
-            _, best_eval, all_evals_for_rep = ea.run()
+            _, all_evals_for_rep = ea.run()
             # keep track of results
-            best_evals.append(best_eval)
+            if minimize:
+                best_evals.append(np.min(all_evals_for_rep))
+            else: best_evals.append(np.max(all_evals_for_rep))
             all_evals.append(all_evals_for_rep)
         end_time = time.time()
 

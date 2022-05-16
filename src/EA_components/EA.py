@@ -43,7 +43,6 @@ class EA:
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
-        self.best_budget = self.curr_budget
         self.all_best_evals = []
 
         while self.curr_budget < self.budget:
@@ -59,50 +58,35 @@ class EA:
             # Update control variables, e.g. budget and best individual
             self.update_control_vars()
         if self.verbose > 0: # prints once per run
-                print(f"Best eval: {self.best_eval} on budget: {self.best_budget}")
-        return self.best_indiv, self.best_eval, np.array(self.all_best_evals)
+                print(f"Best eval: {self.best_eval}")
+        return self.best_indiv, np.array(self.all_best_evals)
 
     def update_control_vars(self):
         """ Updates all control variables
         """
         # Update the best individual
+        # best individual is in the first position due to selection
         curr_best_eval = self.parents.fitnesses[0]
         self.all_best_evals.append(curr_best_eval)
-        new_best_found = False
-        if self.minimize and curr_best_eval < self.best_eval:
-            new_best_found = True
-        elif curr_best_eval > self.best_eval:
-            new_best_found = True
-        if new_best_found:
+        if (self.minimize and curr_best_eval < self.best_eval) \
+             or curr_best_eval > self.best_eval:  # minimization or maximization new best
             self.best_indiv = self.parents.individuals[0]
             self.best_eval = curr_best_eval
             # increment number of successful generations
             self.better_generations += 1
             # reset patience since we found a new best
             self.curr_patience = 0
-            # correct best_budget
-            self.best_budget = self.curr_budget
             # debug print
-            if self.verbose > 1: # prints every find the algorithm finds a new best
-                print(f"New best: {self.best_eval}, budget: {self.best_budget}")
+            if self.verbose > 1: # prints every time the algorithm finds a new best
+                print(f"New best: {self.best_eval}, budget: {self.curr_budget}") 
         else:  # new best not found, increment current patience counter
             self.curr_patience += 1
         # increment past generations counter
         self.total_generations += 1
-
-        # update next generation success probability
-        self.offspring.success_prob = self.better_generations / self.total_generations
-
         # reset sigmas if patience has been defined
-        if self.patience:
-            if self.parents.mutation.__class__.__name__ == "OneFifth":
-                # we reset every specified interval
-                if self.total_generations + 1 % self.patience == 0:
-                    self.parents.sigma_init()
-            else:  # we reset sigmas when patience expires
-                if self.curr_patience >= self.patience:
-                    self.parents.sigma_init()
-                    self.curr_patience = 0
+        if self.patience and self.curr_patience >= self.patience:
+            self.parents.sigma_init()
+            self.curr_patience = 0
         
         # increment current budget
         self.curr_budget += self.offspring_size

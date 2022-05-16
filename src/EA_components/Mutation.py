@@ -43,23 +43,3 @@ class Correlated(Mutation):
             sorted_ind = np.argsort(population.fitnesses)[::-1]
 
         pass
-
-
-class IndividualOneFifth(Mutation):
-    """ Uses sigmas but scales them proportionally 
-        when the probability of a successful population is smaller 0.2
-    """
-    def __init__(self, multiplier=0.9):
-        self.multiplier = multiplier
-
-    def mutate(self, population: Population):
-        # increare sigmas for exploration
-        if population.success_prob > 0.20:
-            population.sigmas /= self.multiplier
-        # decrease sigmas for exploitation
-        elif population.success_prob < 0.20:
-            population.sigmas *= self.multiplier
-        # mutate individuals
-        population.individuals += np.random.normal(0, population.sigmas)
-
-

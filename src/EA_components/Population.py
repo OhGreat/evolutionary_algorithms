@@ -20,11 +20,6 @@ class Population:
         # initialize sigmas
         self.sigma_init()
 
-        # Mutation specific checks.
-        # probability of successful popupation for  one fifth success rule mutation
-        if self.mutation.__class__.__name__ == "IndividualOneFifth":
-            self.success_prob = 0
-
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.
         """

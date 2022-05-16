@@ -19,13 +19,13 @@ where:
 
 Attributes of the class:
 - *the parameters specified above*
-- `individuals`: numpy matrix of shape (pop_size, ind_size), represents the population's values/solutions.
+- `individuals`: numpy array of shape (pop_size, ind_size), represents the population's values/solutions.
 - `sigmas`: sigma values used in mutation for the *IndividualSigma* mutation.
 
 Methods available:
 - `sigma_init`: initializes or resets sigmas, with respect to the mutation defined.
 - `max_fitness`: returns the maximum fitness and the index i nthe population.
-- `min_fitness`: returns the minimum fitness and the index i nthe population.
+- `min_fitness`: returns the minimum fitness and the index in the population.
 - `best_fitness`: takes as argument a boolean value *minimize*, which is True by default and defines if the problem is minimization.
 
 example usage of methods:
@@ -41,14 +41,14 @@ best_fit, best_fit_idx = population.best_fitness(minimize=True)
 ```
 
 ### Recombination
-All the recombinations created are applied inplace on the parent and offspring populations. The following Recombination classes have been implemented: **Intermediate**, **GlobalIntermediary**, **Discrete**, **GlobalDiscrete**. All the recombinations take as input the parent and offspring population. The offspring population is actually used to save the new individuals created and specifies the size of the offspring population. Using the recombinations can be done as in the example below:
+All the recombinations created are applied *inplace* on the offspring populations and there is no return value. The following Recombination classes have been implemented: ***Intermediate***, ***GlobalIntermediary***, ***Discrete***, ***GlobalDiscrete***. All the recombinations take as input the parent and offspring population. The offspring population is used to save the new individuals created and specifies the size of the offspring population. Using the recombinations can be done as in the example below:
 ```python
+from EA_components.Recombination import Intermediate
 recomb = Intermediate()
 recomb(parents, offsprings)
 ```
 
 ### Mutation
-
 
 ### Selection
 

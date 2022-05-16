@@ -1,7 +1,7 @@
 #!/bin/bash
 
 python src/main_ea.py \
--r "Discrete" \
+-r "GlobalDiscrete" \
 -m "IndividualSigma" \
 -s "PlusSelection" \
 -e "Ackley" \
@@ -12,4 +12,5 @@ python src/main_ea.py \
 -pat 100 \
 -b 1000 \
 -rep 100 \
--v 1
+-v 1 \
+-seed 0
