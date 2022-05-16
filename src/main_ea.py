@@ -45,10 +45,6 @@ def main():
                         dest='problem_dimension', type=int,
                         default=5,
                         help="Defines the problem dimension which is also the size of each individual.")
-    parser.add_argument('-mul', action='store',
-                        dest='one_fifth_mul', type=float,
-                        default=0.9,
-                        help="Defines the multiplier for the one fifth success rule.")
     parser.add_argument('-pat', action='store',
                         dest='patience', type=int,
                         default=None,
@@ -94,10 +90,7 @@ def main():
     else: recombination = None
 
     # mutation specific controls
-    if args.mutation == "IndividualOneFifth":
-        mutation = globals()[args.mutation](args.one_fifth_mul)
-    else:
-        mutation = globals()[args.mutation]()
+    mutation = globals()[args.mutation]()
     
     # selection specific controls
     selection=globals()[args.selection]()
