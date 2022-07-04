@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "EA_framework-OhGreat"
-version = "0.3.2"
+name = "EA_framework_OhGreat"
+version = "0.3.3"
 authors = [
   { name="Dimitrios Ieronymakis", email="ieronymakis.dim@protonmail.com" },
 ]

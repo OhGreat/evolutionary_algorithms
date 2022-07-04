@@ -9,8 +9,11 @@ This repository contains a framework for applying evolutionary strategies (ES) o
 The population class contains the individuals that are optimized with the EA.
 To initialize a population you can use the following commands:
 ```python
-from EA_components.Population import Population
-population = Population(pop_size, ind_size, mutation)
+# mutation is also explained below
+from EA_components_OhGreat.Mutation import IndividualSigma
+mut = IndividualSigma()
+from EA_components_OhGreat.Population import Population
+population = Population(pop_size=10, ind_size=8, mutation=mut)
 ```
 where:
 - `pop_size` : is an integer value representing the size of the population
@@ -43,7 +46,8 @@ best_fit, best_fit_idx = population.best_fitness(minimize=True)
 ### Recombination
 All the recombinations created are applied *inplace* on the offspring populations and there is no return value. The following Recombination classes have been implemented: ***Intermediate***, ***GlobalIntermediary***, ***Discrete***, ***GlobalDiscrete***. All the recombinations take as input the parent and offspring population. The offspring population is used to save the new individuals created and specifies the size of the offspring population. Using the recombinations can be done as in the example below:
 ```python
-from EA_components.Recombination import Intermediate
+# parents and offsprings are two populations as defined above and should have the same individual size. The offspring population defines the number of recombinations and is used to save the results of the  recombination operation, applied to the parents population.
+from EA_components_OhGreat.Recombination import Intermediate
 recomb = Intermediate()
 recomb(parents, offsprings)
 ```
@@ -55,5 +59,3 @@ recomb(parents, offsprings)
 ### Evaluation
 
 ### EA
-
-## Full algorithm example
