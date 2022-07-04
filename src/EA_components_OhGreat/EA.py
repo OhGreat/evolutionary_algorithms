@@ -87,7 +87,7 @@ class EA:
         # increment past generations counter
         self.total_generations += 1
         # reset sigmas if patience has been defined
-        if self.patience and self.curr_patience >= self.patience:
+        if self.patience is not None and self.curr_patience >= self.patience:
             if self.verbose > 1:
                 print(f"~~ Reinitializing sigmas for generation {self.gen_count}. ~~")
             self.parents.sigma_init()

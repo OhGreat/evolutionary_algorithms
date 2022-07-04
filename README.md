@@ -35,7 +35,7 @@ The following optimization problems have been implemented:<br/>
 ## Installing
 The various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
 ```
-pip install EA-framework-OhGreat==0.2.8
+pip install EA-framework-OhGreat==0.3.4
 ```
 Instrutions and documentation on how to use this package are available <a href="https://pypi.org/project/EA-framework-OhGreat/">here</a>.
 
@@ -82,8 +82,6 @@ https://github.com/OhGreat/evolutionary_algorithms/issues
 
 ## Future Work
 - ~~add more optimization problems~~
-- ~~implement One Fifth rule~~
+- ~~implement more recombination types~~
 - implement CMA-ES mutation strategy
 - implement upsampling
-- ~~implement more recombination types~~
-- add possibility to use IOH experimenter
