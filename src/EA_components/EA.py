@@ -44,6 +44,7 @@ class EA:
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
         self.all_best_evals = []
+        self.gen_count = 0
 
         while self.curr_budget < self.budget:
             # Recombination: creates new offspring
@@ -78,13 +79,17 @@ class EA:
             self.curr_patience = 0
             # debug print
             if self.verbose > 1: # prints every time the algorithm finds a new best
-                print(f"New best: {self.best_eval}, budget: {self.curr_budget}") 
+                print(f"Generation {self.gen_count} Best eval: {self.best_eval}, budget: {self.curr_budget}/{self.budget}")
         else:  # new best not found, increment current patience counter
+            if self.verbose > 1:
+                print(f"Generation {self.gen_count}, no new best found. Budget: {self.curr_budget}/{self.budget}")
             self.curr_patience += 1
         # increment past generations counter
         self.total_generations += 1
         # reset sigmas if patience has been defined
         if self.patience and self.curr_patience >= self.patience:
+            if self.verbose > 1:
+                print(f"~~Reinitializing sigmas for generation {self.gen_count}.~~")
             self.parents.sigma_init()
             self.curr_patience = 0
         
