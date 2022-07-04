@@ -12,4 +12,4 @@ python src/main_ea.py \
 -pat 100 \
 -b 5000 \
 -rep 100 \
--v 0 \
+-v 0

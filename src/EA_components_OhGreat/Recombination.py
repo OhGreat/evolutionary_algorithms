@@ -1,4 +1,4 @@
-from EA_components.Population import *
+from EA_components_OhGreat.Population import *
 import numpy as np
 import random
 

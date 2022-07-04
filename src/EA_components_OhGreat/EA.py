@@ -1,4 +1,4 @@
-from EA_components.Population import *
+from EA_components_OhGreat .Population import *
 import numpy as np
 
 
@@ -79,7 +79,7 @@ class EA:
             self.curr_patience = 0
             # debug print
             if self.verbose > 1: # prints every time the algorithm finds a new best
-                print(f"Generation {self.gen_count} Best eval: {self.best_eval}, budget: {self.curr_budget}/{self.budget}")
+                print(f"Generation {self.gen_count} Best eval: {np.round(self.best_eval, 3)}, budget: {self.curr_budget}/{self.budget}")
         else:  # new best not found, increment current patience counter
             if self.verbose > 1:
                 print(f"Generation {self.gen_count}, no new best found. Budget: {self.curr_budget}/{self.budget}")
@@ -95,3 +95,5 @@ class EA:
         
         # increment current budget
         self.curr_budget += self.offspring_size
+        # increment generation counter
+        self.gen_count += 1
