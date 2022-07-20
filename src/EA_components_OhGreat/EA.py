@@ -70,7 +70,7 @@ class EA:
         curr_best_eval = self.parents.fitnesses[0]
         self.all_best_evals.append(curr_best_eval)
         if (self.minimize and curr_best_eval < self.best_eval) \
-             or curr_best_eval > self.best_eval:  # min or max new best conditions
+            or (not self.minimize and curr_best_eval > self.best_eval):  # min or max new best conditions
             self.best_indiv = self.parents.individuals[0]
             self.best_eval = curr_best_eval
             # increment number of successful generations

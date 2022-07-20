@@ -86,7 +86,8 @@ The EA class incorporates all the above mentioned steps to create an algorithm. 
 from EA_components_OhGreat.EA import EA
 ea_alg = EA(minimize=True, budget=2000,
             parents_size=5, offspring_size=30,
-            individual_size=12, recombination="Discrete", mutation="IndividualSigma", patience=10,
+            individual_size=12, recombination="Discrete",
+            mutation="IndividualSigma", patience=10,
             selection="PlusSelection", evaluation="Ackley",
             verbose=2)
 best_solution, evaluations = ea_alg.run() 
