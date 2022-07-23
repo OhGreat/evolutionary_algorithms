@@ -46,6 +46,10 @@ class EA:
         self.all_best_evals = []
         self.gen_count = 0
 
+        # debug print
+        if self.verbose > 1: # prints zeneration 0 best eval
+            print(f"Generation {self.gen_count} Best eval: {np.round(self.best_eval, 3)}, budget: {self.curr_budget}/{self.budget}")
+
         while self.curr_budget < self.budget:
             # Recombination: creates new offspring
             if self.recombination is not None:
@@ -69,6 +73,21 @@ class EA:
         # best individual is in the first position due to selection
         curr_best_eval = self.parents.fitnesses[0]
         self.all_best_evals.append(curr_best_eval)
+
+        # increment past generations counter
+        self.total_generations += 1
+        # reset sigmas if patience has been defined
+        if self.patience is not None and self.curr_patience >= self.patience:
+            if self.verbose > 1:
+                print(f"~~ Reinitializing sigmas for generation {self.gen_count}. ~~")
+            self.parents.sigma_init()
+            self.curr_patience = 0
+        
+        # increment current budget
+        self.curr_budget += self.offspring_size
+        # increment generation counter
+        self.gen_count += 1
+
         if (self.minimize and curr_best_eval < self.best_eval) \
             or (not self.minimize and curr_best_eval > self.best_eval):  # min or max new best conditions
             self.best_indiv = self.parents.individuals[0]
@@ -84,16 +103,4 @@ class EA:
             if self.verbose > 1:
                 print(f"Generation {self.gen_count}, no new best found. Budget: {self.curr_budget}/{self.budget}")
             self.curr_patience += 1
-        # increment past generations counter
-        self.total_generations += 1
-        # reset sigmas if patience has been defined
-        if self.patience is not None and self.curr_patience >= self.patience:
-            if self.verbose > 1:
-                print(f"~~ Reinitializing sigmas for generation {self.gen_count}. ~~")
-            self.parents.sigma_init()
-            self.curr_patience = 0
         
-        # increment current budget
-        self.curr_budget += self.offspring_size
-        # increment generation counter
-        self.gen_count += 1
