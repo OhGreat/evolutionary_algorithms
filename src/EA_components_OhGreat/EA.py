@@ -37,7 +37,6 @@ class EA:
         self.curr_budget, self.curr_patience = 0, 0
         # Initialize number of better generations found total generations
         self.better_generations = 0
-        self.total_generations = 0
         # Initial parents setup
         self.evaluation(self.parents)
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
@@ -74,19 +73,17 @@ class EA:
         curr_best_eval = self.parents.fitnesses[0]
         self.all_best_evals.append(curr_best_eval)
 
-        # increment past generations counter
-        self.total_generations += 1
+        # increment current budget
+        self.curr_budget += self.offspring_size
+        # increment generation counter
+        self.gen_count += 1
+
         # reset sigmas if patience has been defined
         if self.patience is not None and self.curr_patience >= self.patience:
             if self.verbose > 1:
                 print(f"~~ Reinitializing sigmas for generation {self.gen_count}. ~~")
             self.parents.sigma_init()
             self.curr_patience = 0
-        
-        # increment current budget
-        self.curr_budget += self.offspring_size
-        # increment generation counter
-        self.gen_count += 1
 
         if (self.minimize and curr_best_eval < self.best_eval) \
             or (not self.minimize and curr_best_eval > self.best_eval):  # min or max new best conditions
