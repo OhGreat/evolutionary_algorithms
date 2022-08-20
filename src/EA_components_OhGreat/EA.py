@@ -70,7 +70,7 @@ class EA:
         """
         # Update the best individual
         # best individual is in the first position due to selection
-        curr_best_eval = self.parents.fitnesses[0]
+        curr_best_eval, _ = self.parents.best_fitness(minimize=self.minimize)
         self.all_best_evals.append(curr_best_eval)
 
         # increment current budget
