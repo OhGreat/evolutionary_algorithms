@@ -35,15 +35,15 @@ class EA:
         """
         # Initialize budget and patience
         self.curr_budget, self.curr_patience = 0, 0
-        # Initialize number of better generations found total generations
+        # Initialize number of better generations found and total generations counters
         self.better_generations = 0
+        self.gen_count = 0
         # Initial parents setup
         self.evaluation(self.parents)
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
         self.all_best_evals = []
-        self.gen_count = 0
 
         # debug print
         if self.verbose > 1: # prints zeneration 0 best eval
@@ -75,6 +75,8 @@ class EA:
 
         # increment current budget
         self.curr_budget += self.offspring_size
+        if (self.budget - self.curr_budget) / self.offspring_size < 1:
+            self.offspring_size = self.budget - self.curr_budget
         # increment generation counter
         self.gen_count += 1
 
