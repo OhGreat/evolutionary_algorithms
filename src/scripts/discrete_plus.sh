@@ -11,5 +11,5 @@ python src/main_ea.py \
 -pd 50 \
 -pat 100 \
 -b 5000 \
--rep 100 \
--v 0
+-rep 1 \
+-v 2

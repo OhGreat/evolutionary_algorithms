@@ -51,8 +51,7 @@ class Population:
                 - minimize: set to True for minimization optimization
         """
         if minimize:
-            arg_max = np.argmax(self.fitnesses)
-            return self.fitnesses[arg_max], arg_max 
+            best_arg = np.argmin(self.fitnesses)
         else:
-            arg_min = np.argmin(self.fitnesses)
-            return self.fitnesses[arg_min], arg_min
+            best_arg = np.argmax(self.fitnesses)
+        return self.fitnesses[best_arg], best_arg
