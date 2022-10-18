@@ -1,7 +1,7 @@
-import numpy as np
+import torch
+from torch.distributions import Normal, Uniform
 
-
-class Population:
+class Population_torch:
     """ Attributes:
             - pop_size : size of population
             - ind_size : size of the individual
@@ -10,38 +10,34 @@ class Population:
             - mutation : defines the mutation to be used in order to initialize parameters
             - sigmas : parameters used for the Individual Mutation
     """
-    def __init__(self, pop_size, ind_size, mutation):
+    def __init__(self, pop_size, ind_size, mutation, device):
+        self.device = device
         self.mutation = mutation
-        self.pop_size = pop_size
-        self.ind_size = ind_size
-        self.fitnesses = np.array([])
+        self.pop_size = torch.tensor([pop_size]).to(device)
+        self.ind_size = torch.tensor([ind_size]).to(device)
+        self.fitnesses = torch.tensor([]).to(device)
         # initialize individual values
-        self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
+        self.individuals = Normal(0,1).sample(sample_shape=(self.pop_size,self.ind_size)).to(device)
         # initialize sigmas
         self.sigma_init()
 
     def sigma_init(self):
         """ Initialize sigma values depending on the mutation.
         """
-        if self.mutation.__class__.__name__ == "OneSigma":
-            self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
-                                            np.max(self.individuals)/6, 
-                                            size=self.ind_size)
-        else:
-            self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
-                                            np.max(self.individuals)/6, 
-                                            size=(self.pop_size, self.ind_size))
+        if self.mutation.__class__.__name__ == "IndividualSigma_torch":
+            dist = Uniform(max(0, torch.min(self.individuals)/6), max(1e-10, torch.max(self.individuals)/6))
+            self.sigmas = dist.sample(sample_shape=(self.pop_size,self.ind_size)).to(self.device)
 
     def max_fitness(self):
         """ Return the maximum fitness and its index.
         """
-        arg_max = np.argmax(self.fitnesses)
+        arg_max = torch.argmax(self.fitnesses, dim=0)
         return self.fitnesses[arg_max], arg_max 
 
     def min_fitness(self):
         """ Return the minimum fitness and its index.
         """
-        arg_min = np.argmin(self.fitnesses)
+        arg_min = torch.argmin(self.fitnesses, dim=0)
         return self.fitnesses[arg_min], arg_min
 
     def best_fitness(self, minimize=True):
@@ -51,8 +47,8 @@ class Population:
                 - minimize: set to True for minimization optimization
         """
         if minimize:
-            arg_max = np.argmax(self.fitnesses)
+            arg_max = torch.argmax(self.fitnesses, dim=0)
             return self.fitnesses[arg_max], arg_max 
         else:
-            arg_min = np.argmin(self.fitnesses)
+            arg_min = torch.argmin(self.fitnesses, dim=0)
             return self.fitnesses[arg_min], arg_min
