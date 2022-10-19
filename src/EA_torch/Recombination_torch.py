@@ -1,7 +1,22 @@
-from EA_components_OhGreat.Population_torch import Population_torch
+from EA_torch.Population_torch import Population_torch
 from EA_components_OhGreat.Recombination import Recombination
 import torch
-import numpy as np
+from random import sample
+
+
+class Intermediate_torch(Recombination):
+    """ Creates offspring by taking the average values of the parents
+    """
+    def __call__(self, parents: Population_torch, offspring: Population_torch):
+        for i in range(offspring.pop_size):
+            # pick two parents at random
+            p1, p2 = sample(range(parents.pop_size), k=2)
+            # update offspring population
+            offspring.individuals[i] = (parents.individuals[p1] + parents.individuals[p2]) / 2
+            # recombine alphas if we are using them
+            if parents.mutation.__class__.__name__ == "IndividualSigma_torch":
+                offspring.sigmas[i] = (parents.sigmas[p1] + parents.sigmas[p2]) / 2
+
 
 class GlobalDiscrete_torch(Recombination):
     """ Creates discrete recombined offsprings.

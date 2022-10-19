@@ -88,13 +88,10 @@ def main():
         print("Please use a valid configuration")
         exit()
     else: recombination = None
-
     # mutation specific controls
     mutation = globals()[args.mutation]()
-    
     # selection specific controls
     selection=globals()[args.selection]()
-
     # evaluation function specific controls
     evaluation=[globals()[curr_eval]() for curr_eval in args.evaluation ]
 

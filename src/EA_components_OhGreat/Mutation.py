@@ -51,13 +51,23 @@ class IndividualSigma(Mutation):
         population.individuals += noises
 
 
-# TODO: complete algorithm
-class Correlated(Mutation):
-    def mutate(self, population: Population, minimize=True):
-        # sort our values
-        if minimize:
-            sorted_ind = np.argsort(population.fitnesses)
-        else:  # we need to reverse our indexes
-            sorted_ind = np.argsort(population.fitnesses)[::-1]
+class IndividualSigma_multiprocess(Mutation):
+    """ Sigmas for each individual in the population.
+    """
+    def mutate(self, population: Population):
+        # define tau and tau' learning rates
+        tau = 1/sqrt(2*(sqrt(population.ind_size)))
+        tau_prime = 1/(sqrt(2*population.ind_size))
+        # create N and N' matrixes
+        normal_matr = normal(0,tau,(population.pop_size, population.ind_size))
+        normal_matr_prime = normal(0,tau_prime,(population.pop_size,1))
+        #update our sigmas
+        population.sigmas = population.sigmas * exp(normal_matr + normal_matr_prime)
+        # update our individuals
+        if (population.sigmas < 0).any(): # make sure sigmas are positive
+            population.sigma_init()
+        # create noise and update population
+        noises = normal(0,population.sigmas)
+        population.individuals += noises
 
-        pass
+        return population.individuals, population.sigmas
