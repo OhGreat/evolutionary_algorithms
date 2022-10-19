@@ -54,7 +54,7 @@ recomb(parents, offsprings)
 ```
 
 ### Mutation
-The mutations are applied inplace to the population passed and there is no return value. The following mutation has been implemented: ***IndividualSigma***. You can use it in the following way:
+The mutations are applied inplace to the population passed and there is no return value. The following mutations have been implemented: **OneSigma**, **IndividualSigma**. You can use it in the following way:
 ```python
 from EA_components_OhGreat.Mutation import IndividualSigma
 mutation = IndividualSigma()
@@ -62,7 +62,7 @@ mutation(offsprings)
 ```
 
 ### Evaluation
-Evaluation takes as input a population and assigns to each individual the proper fitness. The fitnesses are applied inlace to the population and there is no return value. The following evaluation functions have been implemented: ***Ackley***, ***Rastrigin***, ***Thevenot***, ***Adjiman***, ***Bartels***. They can be called as below:
+Evaluation takes as input a population and assigns to each individual the proper fitness. The fitnesses are applied inlace to the population and there is no return value. The following evaluation functions have been implemented: **Ackley**, **Rastrigin**, **Thevenot**, **Adjiman**, **Bartels**. They can be called as below:
 ```python
 from EA_components_OhGreat.Evaluation import Ackley
 eval_fun = Ackley()
@@ -71,7 +71,7 @@ eval_fun(population)
 To create your own evaluation function, implement a class with a call method that evaluates the solutions of the `individuals` attribute of the population object and updates its `fitnesses` attribute with a numpy array of *pop_size* length containing the fitnesses of the individuals.
 
 ### Selection
-The folowing selection mechanisms have been implemented: ***PlusSelection***, ***CommaSelection***. *PlusSelection* selects the best individuals from both the parent and offspring populations while, *CommaSelection* only selects the parents of the next generation from the offsprings of the current population. Both the selections take as input both the parent and offspring populations. There is no return value and the selected population is saved in the parents' population.
+The folowing selection mechanisms have been implemented: **PlusSelection**, **CommaSelection**. *PlusSelection* selects the best individuals from both the parent and offspring populations while, *CommaSelection* only selects the parents of the next generation from the offsprings of the current population. Both the selections take as input both the parent and offspring populations. There is no return value and the selected population is saved in the parents' population.
 
 Example:
 ```python

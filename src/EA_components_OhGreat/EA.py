@@ -26,7 +26,7 @@ class EA:
                                     self.individual_size,
                                     mutation)
         self.offspring = Population(self.offspring_size, 
-                                    self.individual_size, 
+                                    self.individual_size,
                                     mutation)
 
     def run(self):

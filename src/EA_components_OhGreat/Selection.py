@@ -20,10 +20,9 @@ class PlusSelection(Selection):
             sorted_ind = np.argsort(fitnesses_stacked)[::-1][:parents.pop_size]
         # update parent population
         parents.individuals = np.vstack([parents.individuals, offspring.individuals])[sorted_ind]
-        parents.sigmas = np.vstack([parents.sigmas, offspring.sigmas])[sorted_ind]
         parents.fitnesses = fitnesses_stacked[sorted_ind] 
-        if parents.mutation.__class__.__name__ == "Correlated":
-                parents.alphas = np.vstack([parents.alphas, offspring.alphas])[sorted_ind]
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            parents.sigmas = np.vstack([parents.sigmas, offspring.sigmas])[sorted_ind]
 
 
 class CommaSelection(Selection):
@@ -37,7 +36,7 @@ class CommaSelection(Selection):
             sorted_ind = np.argsort(offspring.fitnesses)[::-1][:parents.pop_size]
         # update parent population
         parents.individuals = offspring.individuals[sorted_ind]
-        parents.sigmas = offspring.sigmas[sorted_ind]
-        parents.fitnesses = offspring.fitnesses[sorted_ind] 
-        if parents.mutation.__class__.__name__ == "Correlated":
-                parents.alphas = offspring.alphas[sorted_ind]
+        parents.fitnesses = offspring.fitnesses[sorted_ind]
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            parents.sigmas = offspring.sigmas[sorted_ind]
+

@@ -17,7 +17,6 @@ class Population:
         self.fitnesses = np.array([])
         # initialize individual values
         self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
-        # initialize sigmas
         self.sigma_init()
 
     def sigma_init(self):
@@ -27,10 +26,12 @@ class Population:
             self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
                                             np.max(self.individuals)/6, 
                                             size=self.ind_size)
-        else:
+        elif self.mutation.__class__.__name__ == "IndividualSigma":
             self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
                                             np.max(self.individuals)/6, 
                                             size=(self.pop_size, self.ind_size))
+        else:
+            exit("Mutation not yet defined in population.")
 
     def max_fitness(self):
         """ Return the maximum fitness and its index.

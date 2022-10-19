@@ -17,10 +17,9 @@ class Intermediate(Recombination):
             p1, p2 = random.sample(range(parents.pop_size), k=2)
             # update offspring population
             offspring.individuals[i] = (parents.individuals[p1] + parents.individuals[p2]) / 2
-            offspring.sigmas[i] = (parents.sigmas[p1] + parents.sigmas[p2]) / 2
             # recombine alphas if we are using them
-            if parents.mutation.__class__.__name__ == "Correlated":
-                offspring.alphas[i] = (parents.alphas[p1] + parents.alphas[p2]) / 2
+            if parents.mutation.__class__.__name__ == "IndividualSigma":
+                offspring.sigmas[i] = (parents.sigmas[p1] + parents.sigmas[p2]) / 2
 
 
 class GlobalIntermediary(Recombination):
@@ -28,9 +27,8 @@ class GlobalIntermediary(Recombination):
     """
     def __call__(self, parents: Population, offspring: Population):
         offspring.individuals = parents.individuals.mean(axis=0, keepdims=True)
-        offspring.sigmas = parents.sigmas.mean(axis=0)
-        if parents.mutation.__class__.__name__ == "Correlated":
-                offspring.alphas = parents.alphas.mean(axis=0, keepdims=True)
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            offspring.sigmas = parents.sigmas.mean(axis=0)
 
 
 class Discrete(Recombination):
@@ -39,7 +37,8 @@ class Discrete(Recombination):
     def __call__(self, parents: Population, offspring: Population):
         # reset offspring values
         offspring.individuals = []
-        offspring.sigmas = []
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            offspring.sigmas = []
         # create rng for each element of every new individual
         elem_rng = np.random.uniform(size=(offspring.pop_size,offspring.ind_size))
         for i in range(offspring.pop_size):
@@ -52,14 +51,16 @@ class Discrete(Recombination):
                                             parents.individuals[p2],
                                             elem_rng[i])])
             # create new sigmas
-            offspring.sigmas.append([par_1 if p >= .5 else par_2
-                                    for par_1, par_2, p in 
-                                    zip(parents.sigmas[p1],
-                                        parents.sigmas[p2],
-                                        elem_rng[i])])
+            if parents.mutation.__class__.__name__ == "IndividualSigma":
+                offspring.sigmas.append([par_1 if p >= .5 else par_2
+                                        for par_1, par_2, p in 
+                                        zip(parents.sigmas[p1],
+                                            parents.sigmas[p2],
+                                            elem_rng[i])])
         # revert back to numpy
         offspring.individuals = np.array(offspring.individuals)
-        offspring.sigmas = np.array(offspring.sigmas)
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            offspring.sigmas = np.array(offspring.sigmas)
 
 
 class GlobalDiscrete(Recombination):
@@ -70,18 +71,22 @@ class GlobalDiscrete(Recombination):
         parent_choices = np.random.choice(range(parents.pop_size), size=(offspring.pop_size, offspring.ind_size))
         # reset offspring
         offspring.individuals = []
-        offspring.sigmas = []
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            offspring.sigmas = []
         for i in range(offspring.pop_size):
             # create new offspring
             offspring.individuals.append([curr_par[curr_choice] 
                                             for curr_par, curr_choice in 
                                             zip(parents.individuals.T, 
                                                 parent_choices[i])])
-            # create offspring's sigmas
-            offspring.sigmas.append([curr_par[curr_choice] 
-                                            for curr_par, curr_choice in 
-                                            zip(parents.sigmas.T, 
-                                                parent_choices[i])])
+            
+            # recombine sigmas if required
+            if parents.mutation.__class__.__name__ == "IndividualSigma":
+                offspring.sigmas.append([curr_par[curr_choice] 
+                                                for curr_par, curr_choice in 
+                                                zip(parents.sigmas.T, 
+                                                    parent_choices[i])])
         # revert arrays to numpy
         offspring.individuals = np.array(offspring.individuals)
-        offspring.sigmas = np.array(offspring.sigmas)
+        if parents.mutation.__class__.__name__ == "IndividualSigma":
+            offspring.sigmas = np.array(offspring.sigmas)

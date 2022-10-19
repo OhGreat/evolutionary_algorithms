@@ -2,14 +2,14 @@
 
 python src/main_ea.py \
 -r "GlobalDiscrete" \
--m "IndividualSigma" \
+-m "OneSigma" \
 -s "PlusSelection" \
 -e "Rastrigin" \
 -min \
 -ps 6 \
 -os 36 \
 -pd 50 \
--pat 100 \
+-pat 3 \
 -b 5000 \
 -rep 1 \
 -v 2

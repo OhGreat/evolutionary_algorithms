@@ -13,9 +13,11 @@ class Population_torch:
     def __init__(self, pop_size, ind_size, mutation, device):
         self.device = device
         self.mutation = mutation
-        self.pop_size = torch.tensor([pop_size]).to(device)
-        self.ind_size = torch.tensor([ind_size]).to(device)
-        self.fitnesses = torch.tensor([]).to(device)
+        self.pop_size = pop_size
+        self.ind_size = ind_size
+        self.pop_size_v = torch.tensor([pop_size], device=device)
+        self.ind_size_v = torch.tensor([ind_size], device=device)
+        self.fitnesses = torch.tensor([], device=device)
         # initialize individual values
         self.individuals = Normal(0,1).sample(sample_shape=(self.pop_size,self.ind_size)).to(device)
         # initialize sigmas
@@ -25,8 +27,10 @@ class Population_torch:
         """ Initialize sigma values depending on the mutation.
         """
         if self.mutation.__class__.__name__ == "IndividualSigma_torch":
-            dist = Uniform(max(0, torch.min(self.individuals)/6), max(1e-10, torch.max(self.individuals)/6))
+            dist = Uniform(max(0, torch.min(self.individuals)/6), max(1e-5, torch.max(self.individuals)/6))
             self.sigmas = dist.sample(sample_shape=(self.pop_size,self.ind_size)).to(self.device)
+        else:
+            exit("Mutation not defined in population.")
 
     def max_fitness(self):
         """ Return the maximum fitness and its index.
