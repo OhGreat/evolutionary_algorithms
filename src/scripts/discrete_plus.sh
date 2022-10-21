@@ -2,7 +2,7 @@
 
 python src/main_ea.py \
 -r "GlobalDiscrete" \
--m "OneSigma" \
+-m "IndividualSigma" \
 -s "PlusSelection" \
 -e "Rastrigin" \
 -min \

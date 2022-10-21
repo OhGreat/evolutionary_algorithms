@@ -18,18 +18,20 @@ def main():
     pop_size=20
     off_size=140
     ind_size = 50000
-    budget = 5000
+    budget = 10000
     pat = 3
 
-    mut = IndividualSigma()
-    pop = Population(pop_size,ind_size, mut)
-    off = Population(off_size,ind_size, mut)
-    rec = Intermediate()
-    sel = CommaSelection()
-    eval_ = Bartels()
+    # mut = IndividualSigma()
+    # pop = Population(pop_size,ind_size, mut)
+    # off = Population(off_size,ind_size, mut)
+    # rec = Intermediate()
+    # sel = CommaSelection()
+    # eval_ = Bartels()
 
     mut_torch = IndividualSigma_torch(device)
-    rec_torch = Intermediate_torch()
+    # rec_torch = Intermediate_torch()
+    # rec_torch = GlobalDiscrete_torch(device)
+    rec_torch = None
     sel_torch = CommaSelection_torch()
     eval_torch = Adjiman_torch()
     # eval_torch = Bartels_torch()

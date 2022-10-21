@@ -20,14 +20,13 @@ def run_EA( pop: Population_torch, off_pop: Population_torch,
         print(f"Gen: {curr_gen} new best: {np.round(best_eval, 3)}, budget: {curr_budget}/{budget}")
 
     while curr_budget < budget:
-        
-        curr_gen += 1
-
+        # create and evaluate new generation
         if rec is not None:
             rec(pop, off_pop)
         mut(off_pop)
         eval_(off_pop)
         sel(pop, off_pop)
+        curr_gen += 1
 
         # budget control
         curr_budget += off_pop.pop_size
@@ -35,8 +34,8 @@ def run_EA( pop: Population_torch, off_pop: Population_torch,
             new_pop_size = budget - curr_budget
             off_pop.pop_size = new_pop_size
             off_pop.pop_size_v[0] = new_pop_size
-            off_pop.individuals = off_pop.individuals[:off_pop.pop_size]
-            off_pop.mut_params = off_pop.mut_params[:off_pop.pop_size]
+            off_pop.individuals = off_pop.individuals[:new_pop_size]
+            off_pop.mut_params = off_pop.mut_params[:new_pop_size]
 
         # check for new best
         curr_best, _ = pop.best_fitness(minimize)
@@ -49,13 +48,13 @@ def run_EA( pop: Population_torch, off_pop: Population_torch,
             print(f"Gen: {curr_gen}, new best: {np.round(best_eval, 3)}, budget: {curr_budget}/{budget}")
 
         else:
+            print(f"Gen: {curr_gen}, no new best found.")
             curr_pat += 1
             if patience is not None and curr_pat >= patience:
+                print("Resetting mutation params, patience expired.")
                 pop.mut_params_init()
-            print(f"Gen: {curr_gen}, no new best found.")
 
         all_best_evals.append(best_eval)
 
-    print(pop.individuals)
     print(f"Best eval found: {np.round(best_eval, 3)}")
     return best_indiv, best_eval

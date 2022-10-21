@@ -2,6 +2,7 @@ from EA_torch.Population_torch import Population_torch
 from EA_numpy.Recombination import Recombination
 import torch
 from random import sample
+import numpy as np
 
 
 class Intermediate_torch(Recombination):
@@ -32,19 +33,45 @@ class GlobalDiscrete_torch(Recombination):
         # print(parent_choices.shape)
         # exit()
         # reset offspring
-        offspring.individuals = []
-        offspring.mut_params = []
+        new_inds = []
+        new_mut_params = []
         for i in range(offspring.pop_size):
             # create new offspring
-            offspring.individuals.append([curr_par[curr_choice] 
+            new_inds.append(torch.hstack([curr_par[curr_choice]
                                             for curr_par, curr_choice in 
                                             zip(parents.individuals.T, 
-                                                parent_choices[i])])
+                                                parent_choices[i])]))
             # create offspring's sigmas
-            offspring.mut_params.append([curr_par[curr_choice] 
+            new_mut_params.append(torch.hstack([curr_par[curr_choice]
                                             for curr_par, curr_choice in 
                                             zip(parents.mut_params.T, 
-                                                parent_choices[i])])
-        # revert arrays to numpy
-        offspring.individuals = torch.tensor(offspring.individuals, device=self.device)
-        offspring.mut_params = torch.tensor(offspring.mut_params, device=self.device)
+                                                parent_choices[i])]))
+
+        offspring.individuals = torch.vstack(new_inds)
+        offspring.mut_params = torch.vstack(new_mut_params)
+
+
+class test_GlobalDiscrete_torch(Recombination):
+    """ Creates discrete recombined offsprings.
+    """
+    def __init__(self, device):
+        self.device = device
+
+    def __call__(self, parents: Population_torch, offspring: Population_torch):
+        # rng
+        parent_choices = torch.randint(0,parents.pop_size, 
+                            size=(offspring.pop_size, offspring.ind_size), 
+                            device=self.device)
+        # print(parent_choices.shape)
+        # exit()
+        # reset offspring
+        for i, curr_off, curr_sig in zip(range(offspring.pop_size), 
+                                        offspring.individuals,
+                                        offspring.mut_params):
+            for j, curr_par, curr_sigma, curr_choice in zip(range(offspring.ind_size),
+                                                parents.individuals.T,
+                                                parents.mut_params.T,
+                                                parent_choices[i]):
+                
+                curr_off[j] = curr_par[curr_choice]
+                curr_sig[j] = curr_sigma[curr_choice]
