@@ -52,7 +52,7 @@ class Population_torch:
         """
         if minimize:
             arg_max = torch.argmax(self.fitnesses, dim=0)
-            return self.fitnesses[arg_max], arg_max 
+            return self.fitnesses[arg_max].item(), arg_max.item()
         else:
             arg_min = torch.argmin(self.fitnesses, dim=0)
-            return self.fitnesses[arg_min], arg_min
+            return self.fitnesses[arg_min].item(), arg_min.item()

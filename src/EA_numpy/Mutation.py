@@ -2,7 +2,7 @@ import numpy as np
 from numpy import exp
 from numpy.random import normal
 from math import sqrt
-from EA_components_OhGreat.Population import *
+from EA_numpy.Population import *
 
 
 class Mutation:

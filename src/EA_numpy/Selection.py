@@ -1,6 +1,5 @@
-from cmath import inf
 import numpy as np
-from EA_components_OhGreat.Population import *
+from EA_numpy.Population import *
 
 
 class Selection:

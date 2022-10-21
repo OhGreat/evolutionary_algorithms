@@ -1,9 +1,9 @@
-from EA_components_OhGreat.Population import *
-from EA_components_OhGreat.Recombination import *
-from EA_components_OhGreat.Mutation import *
-from EA_components_OhGreat.Selection import *
-from EA_components_OhGreat.Evaluation import *
-from EA_components_OhGreat.EA import *
+from EA_numpy.Population import *
+from EA_numpy.Recombination import *
+from EA_numpy.Mutation import *
+from EA_numpy.Selection import *
+from EA_numpy.Evaluation import *
+from EA_numpy.EA import *
 import matplotlib.pyplot as plt
 import argparse
 import time

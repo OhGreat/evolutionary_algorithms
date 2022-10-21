@@ -1,5 +1,6 @@
+import torch
 import numpy as np
-from EA_components_OhGreat.Population import Population
+from EA_numpy.Population import Population
 
 
 class Ackley():
