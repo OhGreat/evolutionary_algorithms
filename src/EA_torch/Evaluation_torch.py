@@ -36,3 +36,16 @@ class Bartels_torch():
             res = torch.sum(torch.abs(x**2 + x**2 + x*x) + torch.abs(torch.sin(x)) + torch.abs(torch.cos(x)))
             ret_vals.append(res)
         X.fitnesses =  torch.tensor(ret_vals)
+
+
+class Adjiman_torch():
+    """ Evaluate a solution on Adjimin problem.
+        Minimization problem. Optimum is -2.02181.
+    """
+    def __call__(self, X: Population_torch):
+        ret_vals = []
+        x = X.individuals
+        for ind_idx in range(X.individuals.shape[0]):
+            res = torch.sum(torch.cos(x[ind_idx]) * torch.sin(x[ind_idx]) - x[ind_idx] / (x[ind_idx]**2 + 1))
+            ret_vals.append(res)
+        X.fitnesses =  torch.tensor(ret_vals)

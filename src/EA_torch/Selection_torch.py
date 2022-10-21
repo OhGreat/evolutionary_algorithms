@@ -16,7 +16,7 @@ class PlusSelection_torch():
         parents.individuals = torch.vstack([parents.individuals, offspring.individuals])[sorted_ind]
         parents.fitnesses = fitnesses_stacked[sorted_ind] 
         if parents.mutation.__class__.__name__ == "IndividualSigma":
-            parents.sigmas = torch.vstack([parents.sigmas, offspring.sigmas])[sorted_ind]
+            parents.mut_params = torch.vstack([parents.mut_params, offspring.mut_params])[sorted_ind]
 
 
 class CommaSelection_torch():
@@ -32,4 +32,4 @@ class CommaSelection_torch():
         parents.individuals = offspring.individuals[sorted_ind]
         parents.fitnesses = offspring.fitnesses[sorted_ind]
         if parents.mutation.__class__.__name__ == "IndividualSigma":
-            parents.sigmas = offspring.sigmas[sorted_ind]
+            parents.mut_params = offspring.mut_params[sorted_ind]

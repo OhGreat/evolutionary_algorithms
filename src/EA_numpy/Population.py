@@ -17,17 +17,17 @@ class Population:
         self.fitnesses = np.array([])
         # initialize individual values
         self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
-        self.sigma_init()
+        self.mut_params_init()
 
-    def sigma_init(self):
+    def mut_params_init(self):
         """ Initialize sigma values depending on the mutation.
         """
         if self.mutation.__class__.__name__ == "OneSigma":
-            self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
+            self.mut_params = np.random.uniform(max(0, np.min(self.individuals)/6), 
                                             np.max(self.individuals)/6, 
                                             size=self.ind_size)
         elif self.mutation.__class__.__name__ == "IndividualSigma":
-            self.sigmas = np.random.uniform(max(0, np.min(self.individuals)/6), 
+            self.mut_params = np.random.uniform(max(0, np.min(self.individuals)/6), 
                                             np.max(self.individuals)/6, 
                                             size=(self.pop_size, self.ind_size))
         else:

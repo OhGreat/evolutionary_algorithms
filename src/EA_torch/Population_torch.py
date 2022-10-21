@@ -19,16 +19,16 @@ class Population_torch:
         self.ind_size_v = torch.tensor([ind_size], device=device)
         self.fitnesses = torch.tensor([], device=device)
         # initialize individual values
-        self.individuals = Normal(0,1).sample(sample_shape=(self.pop_size,self.ind_size)).to(device)
-        # initialize sigmas
-        self.sigma_init()
+        self.individuals = Normal(0,1).sample(sample_shape=(self.pop_size,self.ind_size)).to(device).type(torch.double)
+        # initialize mutation parameters
+        self.mut_params_init()
 
-    def sigma_init(self):
+    def mut_params_init(self):
         """ Initialize sigma values depending on the mutation.
         """
         if self.mutation.__class__.__name__ == "IndividualSigma_torch":
             dist = Uniform(max(0, torch.min(self.individuals)/6), max(1e-5, torch.max(self.individuals)/6))
-            self.sigmas = dist.sample(sample_shape=(self.pop_size,self.ind_size)).to(self.device)
+            self.mut_params = dist.sample(sample_shape=(self.pop_size,self.ind_size)).to(self.device).type(torch.double)
         else:
             exit("Mutation not defined in population.")
 

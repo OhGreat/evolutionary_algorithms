@@ -15,7 +15,7 @@ class Intermediate_torch(Recombination):
             offspring.individuals[i] = (parents.individuals[p1] + parents.individuals[p2]) / 2
             # recombine alphas if we are using them
             if parents.mutation.__class__.__name__ == "IndividualSigma_torch":
-                offspring.sigmas[i] = (parents.sigmas[p1] + parents.sigmas[p2]) / 2
+                offspring.mut_params[i] = (parents.mut_params[p1] + parents.mut_params[p2]) / 2
 
 
 class GlobalDiscrete_torch(Recombination):
@@ -33,7 +33,7 @@ class GlobalDiscrete_torch(Recombination):
         # exit()
         # reset offspring
         offspring.individuals = []
-        offspring.sigmas = []
+        offspring.mut_params = []
         for i in range(offspring.pop_size):
             # create new offspring
             offspring.individuals.append([curr_par[curr_choice] 
@@ -41,10 +41,10 @@ class GlobalDiscrete_torch(Recombination):
                                             zip(parents.individuals.T, 
                                                 parent_choices[i])])
             # create offspring's sigmas
-            offspring.sigmas.append([curr_par[curr_choice] 
+            offspring.mut_params.append([curr_par[curr_choice] 
                                             for curr_par, curr_choice in 
-                                            zip(parents.sigmas.T, 
+                                            zip(parents.mut_params.T, 
                                                 parent_choices[i])])
         # revert arrays to numpy
         offspring.individuals = torch.tensor(offspring.individuals, device=self.device)
-        offspring.sigmas = torch.tensor(offspring.sigmas, device=self.device)
+        offspring.mut_params = torch.tensor(offspring.mut_params, device=self.device)

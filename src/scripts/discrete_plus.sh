@@ -10,6 +10,6 @@ python src/main_ea.py \
 -os 36 \
 -pd 50 \
 -pat 3 \
--b 5000 \
+-b 50 \
 -rep 1 \
 -v 2

@@ -9,35 +9,51 @@ from EA_torch.Recombination_torch import *
 from EA_torch.Mutation_torch import *
 from EA_torch.Selection_torch import *
 from EA_torch.Evaluation_torch import *
+from EA_torch.EA_torch import run_EA
 
 
 def main():
     device = "cuda"
 
+    pop_size=20
+    off_size=140
+    ind_size = 50000
+    budget = 5000
+    pat = 3
 
     mut = IndividualSigma()
-    mut_torch = IndividualSigma_torch(device)
-
-    pop_size=10
-    off_size=60
-    ind_size = 5000
-
     pop = Population(pop_size,ind_size, mut)
     off = Population(off_size,ind_size, mut)
+    rec = Intermediate()
+    sel = CommaSelection()
+    eval_ = Bartels()
+
+    mut_torch = IndividualSigma_torch(device)
+    rec_torch = Intermediate_torch()
+    sel_torch = CommaSelection_torch()
+    eval_torch = Adjiman_torch()
+    # eval_torch = Bartels_torch()
+
     pop_torch = Population_torch(pop_size,ind_size, mut_torch, device)
     off_torch = Population_torch(off_size,ind_size, mut_torch, device)
 
-    rec = Intermediate()
-    rec_torch = Intermediate_torch()
-    
-    sel_torch = CommaSelection_torch()
-    sel = CommaSelection()
 
-    eval_ = Bartels()
-    eval_torch = Bartels_torch()
+    st_t = time()
+    run_EA( pop_torch, off_torch, 
+            rec_torch, mut_torch, sel_torch, eval_torch,
+            budget, pat, True)
+    end_t = time()
+    print(f"Tot time: {end_t-st_t}")
 
 
-    run_EA(pop_torch, off_torch, rec_torch, mut_torch, sel_torch, eval_torch, 1000, 5, True)
+
+        
+
+
+
+if __name__ == "__main__":
+    main()
+
 
 # pop_torch.fitnesses = torch.tensor([random.uniform(0.,1.) for _ in pop_torch.individuals])
 
@@ -85,27 +101,3 @@ def main():
 # end_t = time()
 # print(f"Individual sigma time: {end_t - st_t}")
 
-
-
-def run_EA( pop: Population_torch, off_pop: Population_torch, 
-            rec, mut, sel, eval_, 
-            budget, patience, minimize,
-            verbose=2):
-
-    curr_budget = 0
-    curr_gen = 0
-    better_gens = 0
-    # initial evaluation
-    eval_(pop)
-    best_eval, best_idx = pop.best_fitness(minimize)
-    best_indiv = pop.individuals[best_idx]
-    curr_budget += pop.pop_size
-    all_best_evals = []
-
-    # debug print
-    if verbose > 1: # prints zeneration 0 best eval
-        print(f"Generation {curr_gen} Best eval: {np.round(best_eval, 3)}, budget: {curr_budget}/{budget}")
-
-
-if __name__ == "__main__":
-    main()

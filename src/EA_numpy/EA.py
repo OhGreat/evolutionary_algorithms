@@ -76,7 +76,10 @@ class EA:
         # increment current budget
         self.curr_budget += self.offspring_size
         if (self.budget - self.curr_budget) / self.offspring_size < 1:
-            self.offspring_size = self.budget - self.curr_budget
+            new_offspring_size = self.budget - self.curr_budget
+            self.offspring.pop_size = new_offspring_size
+            self.offspring.individuals = self.offspring.individuals[:new_offspring_size]
+            self.offspring.mut_params = self.offspring.mut_params[:new_offspring_size]
         # increment generation counter
         self.gen_count += 1
 
@@ -84,7 +87,7 @@ class EA:
         if self.patience is not None and self.curr_patience >= self.patience:
             if self.verbose > 1:
                 print(f"~~ Reinitializing sigmas for generation {self.gen_count}. ~~")
-            self.parents.sigma_init()
+            self.parents.mut_params_init()
             self.curr_patience = 0
 
         if (self.minimize and curr_best_eval < self.best_eval) \

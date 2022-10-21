@@ -21,7 +21,7 @@ class PlusSelection(Selection):
         parents.individuals = np.vstack([parents.individuals, offspring.individuals])[sorted_ind]
         parents.fitnesses = fitnesses_stacked[sorted_ind] 
         if parents.mutation.__class__.__name__ == "IndividualSigma":
-            parents.sigmas = np.vstack([parents.sigmas, offspring.sigmas])[sorted_ind]
+            parents.mut_params = np.vstack([parents.mut_params, offspring.mut_params])[sorted_ind]
 
 
 class CommaSelection(Selection):
@@ -37,5 +37,5 @@ class CommaSelection(Selection):
         parents.individuals = offspring.individuals[sorted_ind]
         parents.fitnesses = offspring.fitnesses[sorted_ind]
         if parents.mutation.__class__.__name__ == "IndividualSigma":
-            parents.sigmas = offspring.sigmas[sorted_ind]
+            parents.mut_params = offspring.mut_params[sorted_ind]
 
