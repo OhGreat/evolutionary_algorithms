@@ -33,6 +33,9 @@ def main():
     parser.add_argument('-min', action='store_true', 
                         dest='minimize',
                         help="Use this flag if the problem is minimization.")
+    parser.add_argument('-discrete', action='store_true', 
+                        dest='discrete',
+                        help="Use this flag if the problem is minimization.")
     parser.add_argument('-ps', action='store',
                         dest='parents_size', type=int,
                         default=4,
@@ -117,6 +120,7 @@ def main():
                     parents_size=parents_size,
                     offspring_size=offspring_size,
                     individual_size=individual_size,
+                    discrete=args.discrete,
                     recombination=recombination,
                     mutation=mutation,
                     selection=selection,

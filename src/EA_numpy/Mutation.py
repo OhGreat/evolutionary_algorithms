@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import exp
-from numpy.random import normal
+from numpy.random import normal, uniform
 from math import sqrt
 from EA_numpy.Population import *
 
@@ -14,6 +14,17 @@ class Mutation:
     def __call__(self, *args):
         self.mutate(*args)
 
+class BitFlip(Mutation):
+    """ Binary mutation consisting of bit flips with probability p.
+    """
+    def __init__(self, p):
+        self.p = 1 - p
+
+    def mutate(self, population: Population):
+        
+        population.individuals = np.array([[not gene if uniform() > self.p else gene 
+                                for gene in ind ] 
+                                    for ind in population.individuals])
 
 class OneSigma(Mutation):
     """ One Sigma method to control all population.

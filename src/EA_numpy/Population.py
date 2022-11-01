@@ -10,14 +10,18 @@ class Population:
             - mutation : defines the mutation to be used in order to initialize parameters
             - sigmas : parameters used for the Individual Mutation
     """
-    def __init__(self, pop_size, ind_size, mutation):
+    def __init__(self, pop_size, ind_size, discrete=False, mutation=None):
         self.mutation = mutation
         self.pop_size = pop_size
         self.ind_size = ind_size
         self.fitnesses = np.array([])
         # initialize individual values
-        self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
-        self.mut_params_init()
+        if discrete:
+            self.individuals = np.random.randint(2, size=(self.pop_size, self.ind_size))
+        else:
+            self.individuals = np.random.uniform(0, 1, size=(self.pop_size, self.ind_size))
+        if mutation is not None:
+            self.mut_params_init()
 
     def mut_params_init(self):
         """ Initialize sigma values depending on the mutation.
@@ -31,7 +35,8 @@ class Population:
                                             np.max(self.individuals)/6, 
                                             size=(self.pop_size, self.ind_size))
         else:
-            exit("Mutation not yet defined in population.")
+            self.mut_params = np.array([])
+            print("No mutation parameters created.")
 
     def max_fitness(self):
         """ Return the maximum fitness and its index.

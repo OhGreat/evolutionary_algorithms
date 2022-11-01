@@ -2,6 +2,9 @@ import torch
 import numpy as np
 from EA_numpy.Population import Population
 
+class OneMax():
+    def __call__(self, X: Population):
+        X.fitnesses =  np.sum(X.individuals, axis=1)
 
 class Ackley():
     """ Evaluate a solution on Ackley problem

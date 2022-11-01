@@ -7,7 +7,7 @@ class EA:
     """
     def __init__(self, minimize, budget, patience,
                 parents_size, offspring_size,
-                individual_size,
+                individual_size, discrete,
                 recombination, mutation, 
                 selection, evaluation,
                 verbose):
@@ -17,6 +17,7 @@ class EA:
         self.parents_size = parents_size
         self.offspring_size = offspring_size
         self.individual_size = individual_size
+        self.discrete = discrete
         self.recombination = recombination
         self.mutation = mutation
         self.selection = selection
@@ -24,10 +25,10 @@ class EA:
         self.verbose=verbose
         self.parents = Population(  self.parents_size,
                                     self.individual_size,
-                                    mutation)
+                                    self.discrete, mutation)
         self.offspring = Population(self.offspring_size, 
                                     self.individual_size,
-                                    mutation)
+                                    self.discrete, mutation)
 
     def run(self):
         """ Runs the Evolutionary Strategy.
@@ -50,6 +51,8 @@ class EA:
             print(f"Generation {self.gen_count} Best eval: {np.round(self.best_eval, 3)}, budget: {self.curr_budget}/{self.budget}")
 
         while self.curr_budget < self.budget:
+            # check offspring population size to match maximum budget
+            self.population_size_control()
             # Recombination: creates new offspring
             if self.recombination is not None:
                 self.recombination(self.parents, self.offspring)
@@ -65,6 +68,16 @@ class EA:
                 print(f"Best eval: {self.best_eval}")
         return self.best_indiv, np.array(self.all_best_evals)
 
+    def population_size_control(self):
+        """ Check offspring population size to match maximum budget
+        """
+        if (self.budget - self.curr_budget) / self.offspring_size < 1:
+            new_offspring_size = self.budget - self.curr_budget
+            self.offspring.pop_size = new_offspring_size
+            self.offspring.individuals = self.offspring.individuals[:new_offspring_size]
+            if self.offspring.mut_params is not None:
+                self.offspring.mut_params = self.offspring.mut_params[:new_offspring_size]
+
     def update_control_vars(self):
         """ Updates all control variables
         """
@@ -73,14 +86,8 @@ class EA:
         curr_best_eval, _ = self.parents.best_fitness(minimize=self.minimize)
         self.all_best_evals.append(curr_best_eval)
 
-        # increment current budget
-        self.curr_budget += self.offspring_size
-        if (self.budget - self.curr_budget) / self.offspring_size < 1:
-            new_offspring_size = self.budget - self.curr_budget
-            self.offspring.pop_size = new_offspring_size
-            self.offspring.individuals = self.offspring.individuals[:new_offspring_size]
-            self.offspring.mut_params = self.offspring.mut_params[:new_offspring_size]
-        # increment generation counter
+        # increment budget and generation counter
+        self.curr_budget += self.offspring.pop_size
         self.gen_count += 1
 
         # reset sigmas if patience has been defined
