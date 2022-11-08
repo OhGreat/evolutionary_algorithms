@@ -1,6 +1,33 @@
 import numpy as np
 
 
+class Individual:
+    def __init__(self, size, discrete=False, mutation=None):
+        self.mutation = mutation
+        self.size = size
+        self.fitnesses = np.array([])
+        # initialize individual values
+        if discrete:
+            self.values = np.random.randint(2, size=self.size)
+        else:
+            self.values = np.random.uniform(0, 1, size=self.size)
+        if mutation is not None:
+            self.mut_params_init()
+
+    def mut_params_init(self):
+        """ Initialize sigma values depending on the mutation.
+        """
+        if self.mutation.__class__.__name__ == "OneSigma":
+            self.mut_params = np.random.uniform(max(0, np.min(self.values)/6), 
+                                            np.max(self.values)/6, 
+                                            size=1)
+        elif self.mutation.__class__.__name__ == "IndividualSigma_multiprocess":
+            self.mut_params = np.random.uniform(max(0, np.min(self.values)/6), 
+                                            np.max(self.values)/6, 
+                                            size=self.size)
+
+
+
 class Population:
     """ Attributes:
             - pop_size : size of population

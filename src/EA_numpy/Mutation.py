@@ -14,6 +14,7 @@ class Mutation:
     def __call__(self, *args):
         self.mutate(*args)
 
+
 class BitFlip(Mutation):
     """ Binary mutation consisting of bit flips with probability p.
     """
@@ -21,10 +22,10 @@ class BitFlip(Mutation):
         self.p = 1 - p
 
     def mutate(self, population: Population):
-        
         population.individuals = np.array([[not gene if uniform() > self.p else gene 
-                                for gene in ind ] 
-                                    for ind in population.individuals])
+                                            for gene in ind ] 
+                                                for ind in population.individuals])
+
 
 class OneSigma(Mutation):
     """ One Sigma method to control all population.
@@ -65,20 +66,20 @@ class IndividualSigma(Mutation):
 class IndividualSigma_multiprocess(Mutation):
     """ Sigmas for each individual in the population.
     """
-    def mutate(self, population: Population):
+    def mutate(self, individual: Individual):
         # define tau and tau' learning rates
-        tau = 1/sqrt(2*(sqrt(population.ind_size)))
-        tau_prime = 1/(sqrt(2*population.ind_size))
+        tau = 1/sqrt(2*(sqrt(individual.size)))
+        tau_prime = 1/(sqrt(2*individual.size))
         # create N and N' matrixes
-        normal_matr = normal(0,tau,(population.pop_size, population.ind_size))
-        normal_matr_prime = normal(0,tau_prime,(population.pop_size,1))
+        normal_matr = normal(0,tau,individual.size)
+        normal_matr_prime = normal(0,tau_prime,1)
         #update our sigmas
-        population.mut_params = population.mut_params * exp(normal_matr + normal_matr_prime)
+        individual.mut_params = individual.mut_params * exp(normal_matr + normal_matr_prime)
         # update our individuals
-        if (population.mut_params < 0).any(): # make sure sigmas are positive
-            population.mut_params_init()
+        if (individual.mut_params < 0).any(): # make sure sigmas are positive
+            individual.mut_params_init()
         # create noise and update population
-        noises = normal(0,population.mut_params)
-        population.individuals += noises
+        noises = normal(0,individual.mut_params)
+        individual.values += noises
 
-        return population.individuals, population.mut_params
+        return individual.values, individual.mut_params
