@@ -11,9 +11,9 @@ The population class contains the individuals that are optimized with the EA.
 To initialize a population you can use the following commands:
 ```python
 # mutation is also explained below
-from EA_numpy.Mutation import IndividualSigma
+from EA_sequential.Mutation import IndividualSigma
 mut = IndividualSigma()
-from EA_numpy.Population import Population
+from EA_sequential.Population import Population
 population = Population(pop_size=10, ind_size=8, mutation=mut)
 ```
 where:
@@ -48,7 +48,7 @@ best_fit, best_fit_idx = population.best_fitness(minimize=True)
 ### Recombination
 All the recombinations created are applied *inplace* on the offspring populations (defined similarly to the above example) and there is no return value. The following Recombination classes have been implemented: ***Intermediate***, ***GlobalIntermediary***, ***Discrete***, ***GlobalDiscrete***. All the recombinations take as input the parent and offspring population. The offspring population is used to save the new individuals created and specifies the size of the offspring population. Using the recombinations can be done as in the example below:
 ```python
-from EA_numpy.Recombination import Intermediate
+from EA_sequential.Recombination import Intermediate
 recomb = Intermediate()
 recomb(parents, offsprings)
 ```
@@ -56,7 +56,7 @@ recomb(parents, offsprings)
 ### Mutation
 The mutations are applied inplace to the population passed and there is no return value. The following mutations have been implemented: **OneSigma**, **IndividualSigma**. You can use it in the following way:
 ```python
-from EA_numpy.Mutation import IndividualSigma
+from EA_sequential.Mutation import IndividualSigma
 mutation = IndividualSigma()
 mutation(offsprings)
 ```
@@ -64,7 +64,7 @@ mutation(offsprings)
 ### Evaluation
 Evaluation takes as input a population and assigns to each individual the proper fitness. The fitnesses are applied inlace to the population and there is no return value. The following evaluation functions have been implemented: **Ackley**, **Rastrigin**, **Thevenot**, **Adjiman**, **Bartels**. They can be called as below:
 ```python
-from EA_numpy.Evaluation import Ackley
+from EA_sequential.Evaluation import Ackley
 eval_fun = Ackley()
 eval_fun(population)
 ```
@@ -75,7 +75,7 @@ The folowing selection mechanisms have been implemented: **PlusSelection**, **Co
 
 Example:
 ```python
-from EA_numpy.Selection import CommaSelection
+from EA_sequential.Selection import CommaSelection
 selection = ComamSelection()
 selection(parents,offsprings)
 ```
@@ -83,7 +83,7 @@ selection(parents,offsprings)
 ### EA
 The EA class incorporates all the above mentioned steps to create an algorithm. It returns the best found offspring and a numpy array of the best evaluation at each generation. It can be used in the following way:
 ```python
-from EA_numpy.EA import EA
+from EA_sequential.EA import EA
 ea_alg = EA(minimize=True, budget=2000,
             parents_size=5, offspring_size=30,
             individual_size=12, recombination="Discrete",
@@ -106,4 +106,6 @@ where:
 - `verbose`: (int) defines the density of debug prints while the algorithm runs.
 
 ## EA Multiprocess Usage
-*To be completed soon.*
+*Under construction.*
+
+In the meanwhile and example is available under `src/multiprocess_comparison.py` for the latest test version.

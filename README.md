@@ -34,13 +34,13 @@ The following optimization problems have been implemented:<br/>
 
 ## Installing
 The various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
-```
-pip install EA-framework-OhGreat==0.3.4
+```bash
+pip install EA-framework
 ```
 Instrutions and documentation on how to use this package are available <a href="https://pypi.org/project/EA-framework/">here</a>.
 
 To clone and use the repository instead, `Python 3` environment is required, with the packages found in the `requirements.txt` file in the main directory. To install them, run from `main directory` the following command:
-```
+```bash
 pip install -r requirements.txt
 ```
 
