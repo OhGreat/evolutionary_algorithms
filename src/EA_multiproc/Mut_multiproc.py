@@ -1,15 +1,16 @@
 from math import sqrt
+from typing import Tuple
 from numpy import exp
 from numpy.random import normal, uniform
 import numpy as np
 
 from EA_multiproc.Pop_multiproc import Individual, Population_multiproc
-from EA_numpy.Mutation import Mutation
+from EA_sequential.Mutation import Mutation
 
 class IndividualSigma_multiproc(Mutation):
     """ Sigmas for each individual in the population.
     """
-    def mutate(self, individual: Individual):
+    def __call__(self, individual: Individual) -> Tuple[np.array, np.array]:
         # define tau and tau' learning rates
         tau = 1/sqrt(2*(sqrt(individual.size)))
         tau_prime = 1/(sqrt(2*individual.size))
@@ -27,7 +28,10 @@ class IndividualSigma_multiproc(Mutation):
 
         return individual.values, mut_params
 
-    def set_mut_params(self, pop: Population_multiproc):
+    def set_mut_params(self, pop: Population_multiproc) -> None:
+        """
+        Sets the mutation parameters to the population
+        """
         for ind in pop.individuals:
             ind.mut_params = np.random.uniform(
                 max(0, np.min(ind.values)/6),

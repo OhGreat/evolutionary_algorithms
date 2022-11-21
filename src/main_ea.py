@@ -1,9 +1,9 @@
-from EA_numpy.Population import *
-from EA_numpy.Recombination import *
-from EA_numpy.Mutation import *
-from EA_numpy.Selection import *
-from EA_numpy.Evaluation import *
-from EA_numpy.EA import *
+from EA_sequential.Population import *
+from EA_sequential.Recombination import *
+from EA_sequential.Mutation import *
+from EA_sequential.Selection import *
+from EA_sequential.Evaluation import *
+from EA_sequential.EA import *
 import matplotlib.pyplot as plt
 import argparse
 import time

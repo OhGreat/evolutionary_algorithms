@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from EA_numpy.Population import *
+from EA_sequential.Population import *
 
 class OneMax():
     def __call__(self, X: Population):

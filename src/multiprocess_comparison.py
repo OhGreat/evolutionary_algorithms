@@ -2,12 +2,12 @@ from multiprocessing import Process, Pool
 import numpy as np
 import time
 
-from EA_numpy.Population import Population
-from EA_numpy.Recombination import Recombination, GlobalDiscrete
-from EA_numpy.Mutation import Mutation, IndividualSigma
-from EA_numpy.Selection import Selection, CommaSelection
-from EA_numpy.Evaluation import Ackley
-from EA_numpy.EA import EA
+from EA_sequential.Population import Population
+from EA_sequential.Recombination import Recombination, GlobalDiscrete
+from EA_sequential.Mutation import Mutation, IndividualSigma
+from EA_sequential.Selection import Selection, CommaSelection
+from EA_sequential.Evaluation import Ackley
+from EA_sequential.EA import EA
 
 from EA_multiproc.EA_pool import EA_pool
 from EA_multiproc.Pop_multiproc import Population_multiproc
@@ -20,11 +20,11 @@ from EA_multiproc.Eval_multiproc import Ackley_multiproc
 minimize = True
 pop_size = 3
 off_size = 21
-ind_size = 50000
+ind_size = 21
 budget = 50
 discrete = False
 patience = 5
-verbose=1
+verbose=0
 
 # Sequential execution ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 m = IndividualSigma()
@@ -49,7 +49,7 @@ ea = EA(minimize=minimize, budget=budget, patience=patience,
 t_start = time.time()
 best_ind, best_eval = ea.run()
 t_end = time.time()
-print(f"EA no parallelization time: {np.round(t_end - t_start,3)}, eval: {max(best_eval)}")
+print(f"EA no parallelization time: {np.round(t_end - t_start,3)}, eval: {min(best_eval)}")
 
 
 # Parallel EA execution ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,4 +78,4 @@ ea_pool = EA_pool(minimize=True, budget=budget, patience=patience,
 t_start = time.time()
 best_ind, best_eval = ea_pool.run()
 t_end = time.time()
-print(f"EA parallelization time: {np.round(t_end - t_start,3)}, eval: {max(best_eval)}")
+print(f"EA parallelization time: {np.round(t_end - t_start,3)}, eval: {min(best_eval)}")

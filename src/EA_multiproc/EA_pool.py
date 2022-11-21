@@ -3,7 +3,7 @@ from typing import Tuple
 from multiprocessing import Pool
 
 from EA_multiproc.Pop_multiproc import Population_multiproc
-from EA_multiproc.Rec_multiproc import Recombination
+from EA_multiproc.Rec_multiproc import Rec_multiproc
 from EA_multiproc.Mut_multiproc import Mutation
 from EA_multiproc.Sel_multiproc import Selection
 
@@ -18,7 +18,7 @@ class EA_pool:
         patience,
         parents: Population_multiproc,
         offsprings: Population_multiproc,
-        recombination: Recombination,
+        recombination: Rec_multiproc,
         mutation: Mutation, 
         selection: Selection,
         evaluation,
@@ -51,6 +51,7 @@ class EA_pool:
         # Initialize number of better generations found and total generations counters
         self.better_generations = 0
         self.gen_count = 0
+        self.all_best_evals = []
         # Initial parents evaluation
         res = pool.map(func=self.evaluation, iterable=self.parents.individuals)
         self.parents.fitnesses = np.array(res)
@@ -58,7 +59,6 @@ class EA_pool:
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
-        self.all_best_evals = []
         # debug print
         if self.verbose > 1: # prints zeneration 0 best eval
             print(f"Generation {self.gen_count} Best eval: {np.round(self.best_eval, 3)}, budget: {self.curr_budget}/{self.budget}")
@@ -76,7 +76,7 @@ class EA_pool:
                     ind.mut_params = new_vals[1]
 
             # Mutation: mutate offspring population
-            res = pool.map_async(func=self.mutation.mutate, iterable=self.offspring.individuals).get()
+            res = pool.map_async(func=self.mutation, iterable=self.offspring.individuals).get()
             for ind, new_vals in zip(self.offspring.individuals, res):
                 ind.values = new_vals[0]
                 ind.mut_params = new_vals[1]

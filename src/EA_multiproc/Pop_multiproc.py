@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Tuple
 
 class Individual:
     def __init__(self, size, discrete=False):
@@ -27,19 +27,19 @@ class Population_multiproc:
         self.has_mut_params = False
         self.fitnesses = np.array([])
 
-    def max_fitness(self):
+    def max_fitness(self) -> Tuple[float, int]:
         """ Return the maximum fitness and its index.
         """
         arg_max = np.argmax(self.fitnesses)
         return self.fitnesses[arg_max], arg_max 
 
-    def min_fitness(self):
+    def min_fitness(self) -> Tuple[float, int]:
         """ Return the minimum fitness and its index.
         """
         arg_min = np.argmin(self.fitnesses)
         return self.fitnesses[arg_min], arg_min
 
-    def best_fitness(self, minimize=True):
+    def best_fitness(self, minimize=True) -> Tuple[float, int]:
         """ Returns the best fitness and index of fittest individual.
             
             Params:

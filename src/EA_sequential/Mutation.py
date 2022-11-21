@@ -3,7 +3,7 @@ from numpy import exp
 from numpy.random import normal, uniform
 from math import sqrt
 
-from EA_numpy.Population import Population
+from EA_sequential.Population import Population
 
 
 class Mutation:

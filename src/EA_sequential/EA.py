@@ -1,4 +1,4 @@
-from EA_numpy .Population import *
+from EA_sequential .Population import *
 import numpy as np
 
 
@@ -39,12 +39,12 @@ class EA:
         # Initialize number of better generations found and total generations counters
         self.better_generations = 0
         self.gen_count = 0
+        self.all_best_evals = []
         # Initial parents setup
         self.evaluation(self.parents)
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
         self.curr_budget += self.parents_size
-        self.all_best_evals = []
 
         # debug print
         if self.verbose > 1: # prints zeneration 0 best eval

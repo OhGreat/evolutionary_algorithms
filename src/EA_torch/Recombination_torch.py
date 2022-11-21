@@ -1,5 +1,5 @@
 from EA_torch.Population_torch import Population_torch
-from EA_numpy.Recombination import Recombination
+from EA_sequential.Recombination import Recombination
 import torch
 from random import sample
 import numpy as np

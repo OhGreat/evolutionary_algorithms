@@ -1,4 +1,4 @@
-from EA_numpy.Population import Population
+from EA_sequential.Population import Population
 import numpy as np
 import random
 

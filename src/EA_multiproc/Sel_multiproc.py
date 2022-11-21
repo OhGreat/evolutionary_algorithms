@@ -1,7 +1,7 @@
 import numpy as np
 
 from EA_multiproc.Pop_multiproc import Population_multiproc
-from EA_numpy.Selection import Selection 
+from EA_sequential.Selection import Selection 
 
 class CommaSelection_multiproc(Selection):
     """ Get the best individuals only from the offspring population

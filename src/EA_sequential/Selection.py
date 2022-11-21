@@ -1,5 +1,5 @@
 import numpy as np
-from EA_numpy.Population import *
+from EA_sequential.Population import *
 
 
 class Selection:
