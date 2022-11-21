@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Usage of cloned repository
+### Usage of sequential EA execution
 The main file to run experiments is the `main_es.py` file in the `src` directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the `scripts` directory.
 
 The following arguments can be set when running `main_es.py`:

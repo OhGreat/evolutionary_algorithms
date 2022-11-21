@@ -13,17 +13,17 @@ class EA_pool:
     """
     def __init__(
         self,
-        minimize,
-        budget,
-        patience,
+        minimize: int,
+        budget: int,
+        patience: int,
         parents: Population_multiproc,
         offsprings: Population_multiproc,
         recombination: Rec_multiproc,
         mutation: Mutation, 
         selection: Selection,
         evaluation,
-        pool_size,
-        verbose
+        pool_size: int,
+        verbose: int,
     ):
         self.minimize = minimize
         self.budget = budget

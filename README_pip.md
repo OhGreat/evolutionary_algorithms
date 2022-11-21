@@ -3,8 +3,8 @@
 
 This repository contains a framework for applying evolutionary strategies (ES) on arbitrary black box optimization problems. The purpose of this package is to facilitate the experimentation of EA in various settings. The original github repository can be found <a href="https://github.com/OhGreat/evolutionary_algorithms">here</a>.
 
-## Usage
-The following EA components have been implemented and can be used independently from other parts of the package as described below.
+## EA Sequential Usage
+The following EA components are executed sequentially and can be used independently from other parts of the package as described below.
 
 ### Population class
 The population class contains the individuals that are optimized with the EA.
@@ -104,3 +104,6 @@ where:
 - `selection`: (string) defines the selection to use (name should be the same as one of the classes implemented)
 - `evaluation`: (string) defines the evaluation function to use (name should be the same as one of the classes implemented)
 - `verbose`: (int) defines the density of debug prints while the algorithm runs.
+
+## EA Multiprocess Usage
+*To be completed soon.*

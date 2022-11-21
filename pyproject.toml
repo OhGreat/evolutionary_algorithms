@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "EA_framework_OhGreat"
-version = "2.1"
+name = "EA_framework"
+version = "2.2"
 authors = [
-  { name="Dimitrios Ieronymakis", email="ieronymakis.dim@protonmail.com" },
+  { name="Dimitrios Ieronymakis", email="dimitris.ieronymakis@gmail.com" },
 ]
 description = "A framework for applying evolutionary algorithms to generic optimization problems."
 readme = "README_pip.md"
