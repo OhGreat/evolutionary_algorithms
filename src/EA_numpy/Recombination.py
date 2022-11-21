@@ -90,3 +90,25 @@ class GlobalDiscrete(Recombination):
         offspring.individuals = np.array(offspring.individuals)
         if parents.mutation.__class__.__name__ == "IndividualSigma":
             offspring.mut_params = np.array(offspring.mut_params)
+
+class GlobalDiscrete_ind(Recombination):
+    """ Creates discrete recombined offsprings.
+    """
+    def __init__(self):
+        self.curr_parents = None
+
+    def __call__(self, offspring: Individual_population):
+        if self.curr_parents is None:
+            exit("Recombination current parents not defined")
+        # rng
+        parent_choices = np.random.choice(range(self.curr_parents.pop_size), size=offspring.size)
+
+        # create new offspring
+        new_vals = np.array([self.curr_parents.individuals[choice].values[i] for i, choice in enumerate(parent_choices)])
+        
+        # recombine mutation parameters if required
+        if self.curr_parents.has_mut_params:
+            new_mut_params =np.array([self.curr_parents.individuals[choice].mut_params[i] for i, choice in enumerate(parent_choices)])
+        else: new_mut_params = None
+        # revert arrays to numpy
+        return new_vals, new_mut_params
