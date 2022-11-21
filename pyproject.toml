@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "EA_framework"
-version = "2.2"
+version = "2.2.1"
 authors = [
   { name="Dimitrios Ieronymakis", email="dimitris.ieronymakis@gmail.com" },
 ]
