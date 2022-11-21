@@ -2,7 +2,8 @@ import numpy as np
 from numpy import exp
 from numpy.random import normal, uniform
 from math import sqrt
-from EA_numpy.Population import *
+
+from EA_numpy.Population import Population
 
 
 class Mutation:
@@ -66,34 +67,3 @@ class IndividualSigma(Mutation):
         # create noise and update population
         noises = normal(0,population.mut_params)
         population.individuals += noises
-
-
-class IndividualSigma_multiprocess(Mutation):
-    """ Sigmas for each individual in the population.
-    """
-    def mutate(self, individual: Individual):
-        # define tau and tau' learning rates
-        tau = 1/sqrt(2*(sqrt(individual.size)))
-        tau_prime = 1/(sqrt(2*individual.size))
-        # create N and N' matrixes
-        normal_matr = normal(0,tau,individual.size)
-        normal_matr_prime = normal(0,tau_prime,1)
-        #update our sigmas
-        mut_params = individual.mut_params * exp(normal_matr + normal_matr_prime)
-        # update our individuals
-        if (mut_params < 0).any(): # make sure sigmas are positive
-            mut_params = self.get_init_params()
-        # create noise and update population
-        noises = normal(0,mut_params)
-        individual.values += noises
-
-        return individual.values, mut_params
-
-    def set_mut_params(self, pop: Individual_population):
-        for ind in pop.individuals:
-            ind.mut_params = np.random.uniform(
-                max(0, np.min(ind.values)/6),
-                np.max(ind.values)/6,
-                size=ind.size
-            )
-        pop.has_mut_params = True

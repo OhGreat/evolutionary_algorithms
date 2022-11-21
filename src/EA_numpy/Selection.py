@@ -39,18 +39,3 @@ class CommaSelection(Selection):
         if parents.mutation.__class__.__name__ == "IndividualSigma":
             parents.mut_params = offspring.mut_params[sorted_ind]
 
-
-class CommaSelection_ind(Selection):
-    """ Get the best individuals only from the offspring population
-    """
-    def __call__(self, parents: Individual_population, offspring: Individual_population, minimize=True):
-        # get sorted indexes
-        if minimize:
-            sorted_ind = np.argsort(offspring.fitnesses)[:parents.pop_size]
-        else:  # we need to reverse our indexes
-            sorted_ind = np.argsort(offspring.fitnesses)[::-1][:parents.pop_size]
-        # update parent population
-        parents.individuals = [offspring.individuals[i] for i in sorted_ind]
-        # parents.individuals = [offspring.individuals[i] for i in sorted_ind]
-        # parents.individuals = offspring.individuals[sorted_ind]
-        parents.fitnesses = offspring.fitnesses[sorted_ind]

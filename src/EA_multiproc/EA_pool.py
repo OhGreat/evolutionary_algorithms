@@ -1,8 +1,11 @@
-from typing import Tuple
-from EA_numpy.Population import Individual_population, Individual
-from EA_numpy.Mutation import Mutation
-from multiprocessing import Pool
 import numpy as np
+from typing import Tuple
+from multiprocessing import Pool
+
+from EA_multiproc.Pop_multiproc import Population_multiproc
+from EA_multiproc.Rec_multiproc import Recombination
+from EA_multiproc.Mut_multiproc import Mutation
+from EA_multiproc.Sel_multiproc import Selection
 
 
 class EA_pool:
@@ -13,11 +16,11 @@ class EA_pool:
         minimize,
         budget,
         patience,
-        parents: Individual_population,
-        offsprings: Individual_population,
-        recombination,
+        parents: Population_multiproc,
+        offsprings: Population_multiproc,
+        recombination: Recombination,
         mutation: Mutation, 
-        selection,
+        selection: Selection,
         evaluation,
         pool_size,
         verbose
