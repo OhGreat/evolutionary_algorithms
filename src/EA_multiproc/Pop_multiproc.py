@@ -2,7 +2,7 @@ import numpy as np
 from typing import Tuple
 
 class Individual:
-    def __init__(self, size, discrete=False):
+    def __init__(self, size, discrete=False) -> None:
         self.size = size
         self.discrete = discrete
         # initialize individual values

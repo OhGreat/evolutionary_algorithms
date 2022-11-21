@@ -6,7 +6,7 @@ from EA_sequential.Recombination import Recombination
 
 class Rec_multiproc:
     def __init__(self) -> None:
-        pass
+        self.curr_parents = None
 
     def __call__(self, offspring: Population_multiproc, *args: Any, **kwds: Any) -> Tuple[np.array, np.array]:
         pass

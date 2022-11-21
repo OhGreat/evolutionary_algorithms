@@ -1,6 +1,7 @@
 import numpy as np
+import multiprocessing
+from math import floor
 from typing import Tuple
-from multiprocessing import Pool
 
 from EA_multiproc.Pop_multiproc import Population_multiproc
 from EA_multiproc.Rec_multiproc import Rec_multiproc
@@ -17,22 +18,19 @@ class EA_pool:
         budget: int,
         patience: int,
         parents: Population_multiproc,
-        offsprings: Population_multiproc,
+        offspring: Population_multiproc,
         recombination: Rec_multiproc,
         mutation: Mutation, 
         selection: Selection,
         evaluation,
         pool_size: int,
         verbose: int,
-    ):
+    ) -> None:
         self.minimize = minimize
         self.budget = budget
         self.patience = patience
         self.parents = parents
-        self.offspring = offsprings
-        self.parents_size = parents.pop_size
-        self.offspring_size = offsprings.pop_size
-        self.individual_size = parents.ind_size
+        self.offspring = offspring
         self.recombination = recombination
         self.mutation = mutation
         self.selection = selection
@@ -45,7 +43,9 @@ class EA_pool:
             Returns the best individual and the best fitness.
         """
         # Create processes pool
-        pool = Pool(8) if self.pool_size is None else Pool(self.pool_size)
+        pool = multiprocessing.Pool(floor(multiprocessing.cpu_count()/2)) if self.pool_size is None else multiprocessing.Pool(self.pool_size)
+        if self.verbose > 1:
+            print(f"Using {floor(multiprocessing.cpu_count()/2)} threads.")
         # Initialize budget and patience
         self.curr_budget, self.curr_patience = 0, 0
         # Initialize number of better generations found and total generations counters
@@ -58,14 +58,19 @@ class EA_pool:
 
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
-        self.curr_budget += self.parents_size
+        self.curr_budget += self.parents.pop_size
         # debug print
         if self.verbose > 1: # prints zeneration 0 best eval
-            print(f"Generation {self.gen_count} Best eval: {np.round(self.best_eval, 3)}, budget: {self.curr_budget}/{self.budget}")
+            print(
+                f"Generation {self.gen_count} \
+                Best eval: {np.round(self.best_eval, 3)}, \
+                budget: {self.curr_budget}/{self.budget}"
+            )
 
         while self.curr_budget < self.budget:
-            # check offspring population size to match maximum budget
-            self.population_size_control()
+            # check offspring population size to match maximum budget for last iteration
+            if (self.budget - self.curr_budget) / self.offspring.pop_size < 1:
+                self.resize_population()
 
             # Recombination: creates new offspring
             if self.recombination is not None:
@@ -94,13 +99,11 @@ class EA_pool:
                 print(f"Best eval: {self.best_eval}")
         return self.best_indiv, np.array(self.all_best_evals)
 
-    def population_size_control(self) -> None:
-        """ Check offspring population size to match maximum budget
+    def resize_population(self) -> None:
+        """ Resize the population to match the maximux budget
         """
-        if (self.budget - self.curr_budget) / self.offspring_size < 1:
-            new_offspring_size = self.budget - self.curr_budget
-            self.offspring.pop_size = new_offspring_size
-            self.offspring.individuals = self.offspring.individuals[:new_offspring_size]
+        self.offspring.pop_size = self.budget - self.curr_budget
+        self.offspring.individuals = self.offspring.individuals[:self.offspring.pop_size]
 
     def update_control_vars(self) -> None:
         """ Updates all control variables

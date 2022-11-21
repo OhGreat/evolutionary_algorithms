@@ -17,11 +17,12 @@ from EA_multiproc.Sel_multiproc import CommaSelection_multiproc
 from EA_multiproc.Eval_multiproc import Ackley_multiproc
 
 # Global parameters
+# advantage of multiprocess observed for ind_size > 500
 minimize = True
 pop_size = 3
-off_size = 21
-ind_size = 21
-budget = 50
+off_size = 3*7
+ind_size = 500
+budget = 5000
 discrete = False
 patience = 5
 verbose=0
@@ -43,9 +44,20 @@ off_pop = pop = Population(
 rec_ = GlobalDiscrete()
 sel_ = CommaSelection()
 ev_ = Ackley()
-ea = EA(minimize=minimize, budget=budget, patience=patience,
-        parents_size=pop_size, offspring_size=off_size, individual_size=ind_size,
-        discrete=discrete, recombination=rec_, mutation=m, selection=sel_, evaluation=ev_, verbose=verbose)
+ea = EA(
+    minimize=minimize,
+    budget=budget,
+    patience=patience,
+    parents_size=pop_size,
+    offspring_size=off_size,
+    individual_size=ind_size,
+    discrete=discrete,
+    recombination=rec_,
+    mutation=m,
+    selection=sel_,
+    evaluation=ev_,
+    verbose=verbose,
+)
 t_start = time.time()
 best_ind, best_eval = ea.run()
 t_end = time.time()
@@ -64,17 +76,27 @@ off_ind = Population_multiproc(
     discrete=discrete,
 )
 mut = IndividualSigma_multiproc()
+# mutation parameters have to be created before calling EA
 mut.set_mut_params(pop_ind)
 mut.set_mut_params(off_ind)
+
 rec = GlobalDiscrete_multiproc()
 sel = CommaSelection_multiproc()
 ev = Ackley_multiproc()
-ea_pool = EA_pool(minimize=True, budget=budget, patience=patience, 
-                parents=pop_ind, offsprings=off_ind,
-                recombination=rec, mutation=mut, selection=sel, evaluation=ev,
-                pool_size=None, verbose=verbose)
 
-
+ea_pool = EA_pool(
+    minimize=True,
+    budget=budget,
+    patience=patience, 
+    parents=pop_ind,
+    offspring=off_ind,
+    recombination=rec,
+    mutation=mut,
+    selection=sel,
+    evaluation=ev,
+    pool_size=None,
+    verbose=verbose,
+)
 t_start = time.time()
 best_ind, best_eval = ea_pool.run()
 t_end = time.time()
