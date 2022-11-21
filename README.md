@@ -66,7 +66,7 @@ The following arguments can be set when running `main_es.py`:
 - `-save_plots` : set the flag in order to save plots of the algorithms performance.
 
 ### Usage of pip package
-To use the pip package please refer to the documentation available <a href="https://pypi.org/project/EA-framework-OhGreat/">here</a>.
+To use the pip package please refer to the documentation available <a href="https://pypi.org/project/EA-framework/">here</a>.
 
 ### Creating your own evaluation functions 
 To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `src/classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
