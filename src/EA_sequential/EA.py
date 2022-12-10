@@ -44,6 +44,7 @@ class EA:
         self.evaluation(self.parents)
         self.best_eval, self.best_index = self.parents.best_fitness(self.minimize)
         self.best_indiv = self.parents.individuals[self.best_index]
+        self.all_best_evals.append(self.best_eval)
         self.curr_budget += self.parents_size
 
         # debug print

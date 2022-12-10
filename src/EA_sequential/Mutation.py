@@ -7,13 +7,10 @@ from EA_sequential.Population import Population
 
 
 class Mutation:
-    def mutate(self):
+    def __call__(self, pop: Population):
         """ Mutate the population.
         """
         pass
-
-    def __call__(self, *args):
-        self.mutate(*args)
 
     def set_mut_params(self, pop: Population):
         """ Set the mutation parameters for each individual
@@ -36,7 +33,7 @@ class BitFlip(Mutation):
 class OneSigma(Mutation):
     """ One Sigma method to control all population.
     """
-    def mutate(self, population: Population):
+    def __call__(self, population: Population):
         # define learning rate
         tau = 1/sqrt(population.ind_size)
         # create gaussian array to update sigmas
@@ -52,7 +49,7 @@ class OneSigma(Mutation):
 class IndividualSigma(Mutation):
     """ Sigmas for each individual in the population.
     """
-    def mutate(self, population: Population):
+    def __Call__(self, population: Population):
         # define tau and tau' learning rates
         tau = 1/sqrt(2*(sqrt(population.ind_size)))
         tau_prime = 1/(sqrt(2*population.ind_size))
