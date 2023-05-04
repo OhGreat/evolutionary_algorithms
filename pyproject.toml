@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "EA_framework"
-version = "2.2.1"
+version = "2.2.2"
 authors = [
   { name="Dimitrios Ieronymakis", email="dimitris.ieronymakis@gmail.com" },
 ]
 description = "A framework for applying evolutionary algorithms to generic optimization problems."
-readme = "README_pip.md"
+readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.7"
 classifiers = [

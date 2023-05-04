@@ -1,87 +1,120 @@
 # Evolutionary Algorithms Framework
+This repository contains a framework for applying evolutionary strategies (ES) on arbitrary black box optimization problems. The purpose of this package is to facilitate the experimentation of EA in various settings. The original github repository can be found <a href="https://github.com/OhGreat/evolutionary_algorithms">here</a>.
 
-This repository contains a framework for applying evolutionary algorithms (EA) on arbitrary black box optimization problems. The purpose of this package is to facilitate the experimentation of EA in various settings. An example usage of this repository can be found <a href="https://github.com/OhGreat/es_for_rl_experimentation">here</a>, where the framework is applied in a reinforcement learning setting to solve gym environments.
+## EA Sequential Usage
+The following EA components are executed sequentially and can be used independently from other parts of the package as described below.
 
-<!-- TABLE OF CONTENTS -->
-<details id="test">
-  <summary>Table of Contents</summary>
-  <ul>
-    <li><a href="#implementation">Implementation</a></li>
-    <li><a href="#installing">Installing</a></li>
-    <li><a href="#usage">Usage of repository</a></li>
-    <ul>
-    <li><a href="#usage-of-the-cloned-repository">Usage of repository</a></li>
-    <li><a href="#usage-of-the-pip-package">Usage of the pip package</a></li>
-    <li><a href="#creating-your-own-evaluation-functions">Creating your own evaluation function</a></li>
-    </ul>
-    <li><a href="#examples">Examples</a></li>
-    <li><a href="#issues">Issues</a></li>
-    <li><a href="#future-work">Future Work</a></li>
-  </ul>
-</details>
-
-## Implementation
-
-The following ES steps have been implemented:
- - **Recombination**: *Intermediate*, *GlobalIntermediary*, *Discrete*, *GlobalDiscrete*
- - **Mutation**: *IndividualSigma*, *(CMA to be added)*
- - **Selection**: (μ + λ) - *PlusSelection*, (μ , λ) - *CommaSelection*
-<br/><br/>
-
-The following optimization problems have been implemented:<br/>
-**Ackley**, **Adjiman**, **Rastrigin**, **Thevenot**, **Bartels**
-
-
-## Installing
-The various EA components present in the `src/EA_components` directory, have been encapsuled for convenience in a pip package that can be installed via the following command:
-```bash
-pip install EA-framework
+### Population class
+The population class contains the individuals that are optimized with the EA.
+To initialize a population you can use the following commands:
+```python
+# mutation is also explained below
+from EA_sequential.Mutation import IndividualSigma
+mut = IndividualSigma()
+from EA_sequential.Population import Population
+population = Population(pop_size=10, ind_size=8, mutation=mut)
 ```
-Instrutions and documentation on how to use this package are available <a href="https://pypi.org/project/EA-framework/">here</a>.
+where:
+- `pop_size` : is an integer value representing the size of the population
+- `ind_size` : integer value representing the size of an individual. Can be seen as the problem dimension.
+- `mutation` : Mutation type. It is used to initialize sigmas and alphas. Please consult the mutation section to learn more about how to initialize a mutation.
 
-To clone and use the repository instead, `Python 3` environment is required, with the packages found in the `requirements.txt` file in the main directory. To install them, run from `main directory` the following command:
-```bash
-pip install -r requirements.txt
+Attributes of the class:
+- *all the parameters specified above*
+- `individuals`: numpy array of shape (pop_size, ind_size), represents the population's values/solutions.
+- `sigmas`: sigma values used in mutation for the *IndividualSigma* mutation.
+- `fitnesses`: fitnesses representing how good each solution of the population is.
+
+Methods available:
+- `sigma_init`: initializes or resets sigmas, with respect to the mutation defined.
+- `max_fitness`: returns the maximum fitness and the index i nthe population.
+- `min_fitness`: returns the minimum fitness and the index in the population.
+- `best_fitness`: takes as argument a boolean value *minimize*, which is True by default and defines if the problem is minimization.
+
+example usage of methods:
+```python
+# sigma_init happens inplace, no return value
+population.sigma_init()  
+# max_fitness returns max value and index
+max_fit, max_fit_idx = population.max_fitness()
+# min_fitness returns min value and index
+min_fit, min_fit_idx = population.min_fitness()
+# best_fitness uses the above functions depending on minimize parameter
+best_fit, best_fit_idx = population.best_fitness(minimize=True)
 ```
 
-## Usage
+### Recombination
+All the recombinations created are applied *inplace* on the offspring populations (defined similarly to the above example) and there is no return value. The following Recombination classes have been implemented: ***Intermediate***, ***GlobalIntermediary***, ***Discrete***, ***GlobalDiscrete***. All the recombinations take as input the parent and offspring population. The offspring population is used to save the new individuals created and specifies the size of the offspring population. Using the recombinations can be done as in the example below:
+```python
+from EA_sequential.Recombination import Intermediate
+recomb = Intermediate()
+recomb(parents, offsprings)
+```
 
-### Usage of sequential EA execution
-The main file to run experiments is the `main_es.py` file in the `src` directory. A detailed description of all the configurable parameters is available below. Example shell scripts have also been created as an example to set arguments, under the `scripts` directory.
+### Mutation
+The mutations are applied inplace to the population passed and there is no return value. The following mutations have been implemented: **OneSigma**, **IndividualSigma**. You can use it in the following way:
+```python
+from EA_sequential.Mutation import IndividualSigma
+mutation = IndividualSigma()
+mutation(offsprings)
+```
 
-The following arguments can be set when running `main_es.py`:
-- `-r` : defines the recombination type. Available options: *"Intermediate"*, *"GlobalIntermediary"*, *"Discrete"*, *"GlobalDiscrete"*.
-- `-m` : defines the mutation type. Available options: *"IndividualSigma"*, *"IndividualOneFifth"*.
-- `-s` : defines the selection type. Available options: *"PlusSelection"*, *"CommaSelection"*.
-- `-e` : defines the evaluation type. Available options: *"Rastrigin"*, *"Ackley"*, *"Thevenot"*, *"Adjiman"*, *"Bartels"*. If an evaluation function is not defined, all the above functions will be used.
-- `-min` : set this flag if the optimization problem is minimization.
-- `-ps` : defines the number of parents. Should be an integer value.
-- `-os` : defines the number of offsprings. Should be an integer value.
-- `-pd` : defines the problem dimension. Will be used to set the individual size.
-- `-pat` : defines the number of unsuccesful generations to wait before resetting sigmas.
-- `-b` : defines the budget. Should be an integer value.
-- `-rep` : defines the number of repetitions to average results. Should be an integer value.
-- `-v` : defines the verbose (prints) intensity. Available options are: *0*, *1*, *2* ,with *2* being the most intense. 
-- `-seed` : defines the seed to use for reproducibility of results. Set to an integer value.
-- `-save_plots` : set the flag in order to save plots of the algorithms performance.
+### Evaluation
+Evaluation takes as input a population and assigns to each individual the proper fitness. The fitnesses are applied inlace to the population and there is no return value. The following evaluation functions have been implemented: **Ackley**, **Rastrigin**, **Thevenot**, **Adjiman**, **Bartels**. They can be called as below:
+```python
+from EA_sequential.Evaluation import Ackley
+eval_fun = Ackley()
+eval_fun(population)
+```
+To create your own evaluation function, implement a class with a call method that evaluates the solutions of the `individuals` attribute of the population object and updates its `fitnesses` attribute with a numpy array of *pop_size* length containing the fitnesses of the individuals.
 
-### Usage of pip package
-To use the pip package please refer to the documentation available <a href="https://pypi.org/project/EA-framework/">here</a>.
+### Selection
+The folowing selection mechanisms have been implemented: **PlusSelection**, **CommaSelection**. *PlusSelection* selects the best individuals from both the parent and offspring populations while, *CommaSelection* only selects the parents of the next generation from the offsprings of the current population. Both the selections take as input both the parent and offspring populations. There is no return value and the selected population is saved in the parents' population.
 
-### Creating your own evaluation functions 
-To create your own evaluation function you can extend the `Evaluate` class on the `Evaluation.py` file in the `src/classes` folder. Each evaluation class should have at least the __call__ methods defined to work properly.
+Example:
+```python
+from EA_sequential.Selection import CommaSelection
+selection = ComamSelection()
+selection(parents,offsprings)
+```
+
+### EA
+The EA class incorporates all the above mentioned steps to create an algorithm. It returns the best found offspring and a numpy array of the best evaluation at each generation. It can be used in the following way:
+```python
+from EA_sequential.EA import EA
+ea_alg = EA(minimize=True, budget=2000,
+            parents_size=5, offspring_size=30,
+            individual_size=12, recombination="Discrete",
+            mutation="IndividualSigma", patience=10,
+            selection="PlusSelection", evaluation="Ackley",
+            verbose=2)
+best_solution, evaluations = ea_alg.run() 
+```
+where:
+- `minimize`: (boolean) True if the proble is minimization, False if maximization.
+- `budget`: (int) defines the maximum number of evaluations to perform before stopping the algorithm.
+- `parents_size`:
+- `offspring_size`:
+- `individual_size`:
+- `recombination`: (string) defines the recombination to use (name should be the same as one of the classes implemented)
+- `mutation`: (string) defines the mutation to use (name should be the same as one of the classes implemented)
+- `patience`: (int) defines the number of generations to wait before resetting the `sigmas` attribute (tied to the mutation) of the parent population.
+- `selection`: (string) defines the selection to use (name should be the same as one of the classes implemented)
+- `evaluation`: (string) defines the evaluation function to use (name should be the same as one of the classes implemented)
+- `verbose`: (int) defines the density of debug prints while the algorithm runs.
+
+## EA Multiprocess Usage
+*Under construction.*
+The latest implementation is available in the original github repository in `sec/EA_multiproc`.
+
+An example is available in the file `src/multiprocess_comparison.py`.
+
+## EA on GPU with Pytorch
+*Under construction.*
+
+Currently available code for experimentation can be found in the original repository under `src/EA_torch`.
 
 ## Examples 
 The following image is the result of the `individual.sh` configuration found in the `src/scripts` directory.
 
 <img src="https://github.com/OhGreat/evolutionary_algorithms/blob/main/readme_aux/example_plots.png" />
-
-## Issues
-If you encounter any problems while using the framework you can notify me by opening an issue here:
-https://github.com/OhGreat/evolutionary_algorithms/issues
-
-## Future Work
-- ~~add more optimization problems~~
-- ~~implement more recombination types~~
-- implement CMA-ES mutation strategy
-- implement upsampling
